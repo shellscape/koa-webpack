@@ -1,5 +1,5 @@
 {
-  "name": "koa-webpack",
+  "name": "koa-webpack-ware",
   "version": "0.0.1",
   "description": "Development and Hot Reload Middleware for Koa2",
   "main": "index.js",
