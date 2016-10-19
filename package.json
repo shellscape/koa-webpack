@@ -1,0 +1,19 @@
+{
+  "name": "koa-webpack",
+  "version": "0.0.1",
+  "description": "Development and Hot Reload Middleware for Koa2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shellscape/koa-webpack.git"
+  },
+  "author": "Andrew Powell <andrew@shellscape.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shellscape/koa-webpack/issues"
+  },
+  "homepage": "https://github.com/shellscape/koa-webpack#readme"
+}
