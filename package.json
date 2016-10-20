@@ -15,5 +15,17 @@
   "bugs": {
     "url": "https://github.com/shellscape/koa-webpack/issues"
   },
-  "homepage": "https://github.com/shellscape/koa-webpack#readme"
+  "homepage": "https://github.com/shellscape/koa-webpack#readme",
+  "dependencies": {
+    "app-root-path": "^2.0.1",
+    "koa-compose": "^3.1.0",
+    "webpack-dev-middleware": "^1.8.4",
+    "webpack-hot-middleware": "^2.13.0"
+  },
+  "peerDependencies": {
+    "webpack": "2.1.x"
+  },
+  "devDependencies": {
+    "webpack": "^2.1.0-beta.25"
+  }
 }
