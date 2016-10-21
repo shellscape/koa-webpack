@@ -39,7 +39,7 @@ app.use(middleware({
 }))
 ```
 
-## Configuration
+## Options
 
 The middleware accepts an `options` Object, which can contain options for the
 `webpack-dev-middleware` and `webpack-hot-middleware` bundled with this module.
@@ -67,7 +67,7 @@ app.use(middleware({
 }))
 ```
 
-### Configuration
+### config
 
 Type: `Object`  
 `optional`
