@@ -17,7 +17,7 @@ import compose from 'koa-compose';
 import root from 'app-root-path';
 import * as path from 'path';
 
-function devWare (compiler, options) {
+function koaDevware (compiler, options) {
   const dev = devMiddleware(compiler, options);
 
   return async (ctx, next) => {
@@ -30,7 +30,7 @@ function devWare (compiler, options) {
   };
 }
 
-function hotWare (compiler, options) {
+function koaHotware (compiler, options) {
   const hot = hotMiddleware(compiler, options);
 
   return async (ctx, next) => {
@@ -68,8 +68,8 @@ export default (options) => {
     options.dev.publicPath = config.output.publicPath;
   }
 
-  const dev = devMiddleware(compiler, options.dev), // eslint-disable-line one-var
-    hot = hotMiddleware(compiler, options.hot);
-
-  return compose([ devWare, hotWare ]);
+  return compose([
+    koaDevware(compiler, options.dev),
+    koaHotware(compiler, options.dev)
+  ]);
 };
