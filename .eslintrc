@@ -1,0 +1,21 @@
+{
+  "parser": "babel-eslint",
+  "rules": {
+    "consistent-return": [0],
+    "complexity": [0],
+    "space-before-function-paren": [0],
+    "indent": [2, 2, { "SwitchCase": 1, "VariableDeclarator": 1 }],
+    "max-len": [1, 1000],
+    "brace-style": [2, "stroustrup", { "allowSingleLine": true }],
+    "space-unary-ops": [0],
+    "one-var": ["error", "always"],
+    "no-extra-parens": [0],
+    "no-bitwise": [0],
+    "semi": [2, "always"],
+    "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }]
+  },
+  "env": {
+    "mocha": true,
+    "node": true
+  }
+}
