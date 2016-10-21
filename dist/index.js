@@ -57,10 +57,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function devWare(compiler, opts) {
+function devWare(compiler, options) {
   var _this = this;
 
-  var dev = (0, _webpackDevMiddleware2.default)(compiler, opts);
+  var dev = (0, _webpackDevMiddleware2.default)(compiler, options);
 
   return function () {
     var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(ctx, next) {
@@ -90,10 +90,10 @@ function devWare(compiler, opts) {
   }();
 }
 
-function hotWare(compiler, opts) {
+function hotWare(compiler, options) {
   var _this2 = this;
 
-  var hot = (0, _webpackHotMiddleware2.default)(compiler, opts);
+  var hot = (0, _webpackHotMiddleware2.default)(compiler, options);
 
   return function () {
     var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(ctx, next) {
@@ -131,7 +131,9 @@ function hotWare(compiler, opts) {
 
 exports.default = function (options) {
 
-  options = (0, _assign2.default)(options || {}, { dev: {}, hot: {} });
+  var defaults = { dev: {}, hot: {} };
+
+  options = (0, _assign2.default)(defaults, options);
 
   var config = options.config,
       compiler = options.compiler;
@@ -149,7 +151,8 @@ exports.default = function (options) {
   }
 
   var dev = (0, _webpackDevMiddleware2.default)(compiler, options.dev),
-      hot = (0, _webpackHotMiddleware2.default)(compiler, options.hot);
+      // eslint-disable-line one-var
+  hot = (0, _webpackHotMiddleware2.default)(compiler, options.hot);
 
   return (0, _koaCompose2.default)([devWare, hotWare]);
 };
