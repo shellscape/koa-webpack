@@ -44,7 +44,7 @@ export default (options) => {
     compiler = options.compiler;
 
   if (!config) {
-    config = require(path.join(root, 'webpack.config.js'));
+    config = require(path.join(root.path, 'webpack.config.js'));
   }
 
   if (!compiler) {
