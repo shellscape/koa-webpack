@@ -18,30 +18,33 @@ import root from 'app-root-path';
 import * as path from 'path';
 
 function devWare (compiler, opts) {
-  const dev = devMiddleware(compiler, opts)
+  const dev = devMiddleware(compiler, opts);
+
   return async (ctx, next) => {
     await dev(ctx.req, {
       end: (content) => {
-        ctx.body = content
+        ctx.body = content;
       },
       setHeader: ctx.set.bind(ctx)
-    }, next)
-  }
+    }, next);
+  };
 }
 
 function hotWare (compiler, opts) {
-  const hot = hotMiddleware(compiler, opts)
+  const hot = hotMiddleware(compiler, opts);
+
   return async (ctx, next) => {
     let stream = new PassThrough();
-    ctx.body = stream
+    ctx.body = stream;
+
     await hot(ctx.req, {
       write: stream.write.bind(stream),
       writeHead: (state, headers) => {
-        ctx.state = state
-        ctx.set(headers)
+        ctx.state = state;
+        ctx.set(headers);
       }
-    }, next)
-  }
+    }, next);
+  };
 }
 
 export default (options) => {
@@ -63,14 +66,8 @@ export default (options) => {
     options.dev.publicPath = config.output.publicPath;
   }
 
-  const dev = devMiddleware(compiler, options.dev);
-  const hot = hotMiddleware(compiler, options.hot);
+  const dev = devMiddleware(compiler, options.dev),
+    hot = hotMiddleware(compiler, options.hot);
 
   return compose([ devWare, hotWare ]);
 };
-
-
-// dev
-
-
-// hot
