@@ -6,8 +6,8 @@ import compose from 'koa-compose';
 import root from 'app-root-path';
 import * as path from 'path';
 
-function devWare (compiler, opts) {
-  const dev = devMiddleware(compiler, opts);
+function devWare (compiler, options) {
+  const dev = devMiddleware(compiler, options);
 
   return async (ctx, next) => {
     await dev(ctx.req, {
@@ -19,8 +19,8 @@ function devWare (compiler, opts) {
   };
 }
 
-function hotWare (compiler, opts) {
-  const hot = hotMiddleware(compiler, opts);
+function hotWare (compiler, options) {
+  const hot = hotMiddleware(compiler, options);
 
   return async (ctx, next) => {
     let stream = new PassThrough();
@@ -38,7 +38,9 @@ function hotWare (compiler, opts) {
 
 export default (options) => {
 
-  options = Object.assign(options || {}, { dev: {}, hot: {} });
+  const defaults = { dev: {}, hot: {} };
+
+  options = Object.assign(defaults, options);
 
   let config = options.config,
     compiler = options.compiler;
@@ -55,7 +57,7 @@ export default (options) => {
     options.dev.publicPath = config.output.publicPath;
   }
 
-  const dev = devMiddleware(compiler, options.dev),
+  const dev = devMiddleware(compiler, options.dev), // eslint-disable-line one-var
     hot = hotMiddleware(compiler, options.hot);
 
   return compose([ devWare, hotWare ]);
