@@ -46,7 +46,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function devWare(compiler, options) {
+function koaDevware(compiler, options) {
   var _this = this;
 
   var dev = (0, _webpackDevMiddleware2.default)(compiler, options);
@@ -79,7 +79,7 @@ function devWare(compiler, options) {
   }();
 }
 
-function hotWare(compiler, options) {
+function koaHotware(compiler, options) {
   var _this2 = this;
 
   var hot = (0, _webpackHotMiddleware2.default)(compiler, options);
@@ -139,11 +139,7 @@ exports.default = function (options) {
     options.dev.publicPath = config.output.publicPath;
   }
 
-  var dev = (0, _webpackDevMiddleware2.default)(compiler, options.dev),
-      // eslint-disable-line one-var
-  hot = (0, _webpackHotMiddleware2.default)(compiler, options.hot);
-
-  return (0, _koaCompose2.default)([devWare, hotWare]);
+  return (0, _koaCompose2.default)([koaDevware(compiler, options.dev), koaHotware(compiler, options.dev)]);
 };
 
 module.exports = exports['default'];
