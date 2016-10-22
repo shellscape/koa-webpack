@@ -1,4 +1,4 @@
-# koa-webpack-ware
+# koa-webpack
 
 Development and Hot Module Reload Middleware for Koa2, in a single middleware module.
 
