@@ -150,7 +150,7 @@ exports.default = function (options) {
     options.dev.publicPath = config.output.publicPath;
   }
 
-  return (0, _koaCompose2.default)([koaDevware(compiler, options.dev), koaHotware(compiler, options.dev)]);
+  return (0, _koaCompose2.default)([koaDevware(compiler, options.dev), koaHotware(compiler, options.hot)]);
 };
 
 module.exports = exports['default'];
