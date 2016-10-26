@@ -59,6 +59,6 @@ export default (options) => {
 
   return compose([
     koaDevware(compiler, options.dev),
-    koaHotware(compiler, options.dev)
+    koaHotware(compiler, options.hot)
   ]);
 };
