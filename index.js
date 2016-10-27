@@ -9,28 +9,47 @@ import * as path from 'path';
 function koaDevware (compiler, options) {
   const dev = devMiddleware(compiler, options);
 
-  return async (ctx, next) => {
-    await dev(ctx.req, {
-      end: (content) => {
-        ctx.body = content;
-      },
-      setHeader: ctx.set.bind(ctx)
-    }, next);
+  function middleware (context, next) {
+    return new Promise((resolve, reject) => {
+      // https://github.com/webpack/docs/wiki/plugins#donestats-stats
+      compiler.plugin('done', (stats) => {
+        console.log('done');
+        resolve(stats);
+      });
+
+      compiler.plugin('failed', (error) => {
+        console.log('failed');
+        reject(error);
+      });
+
+      dev(context.req, {
+        end: (content) => {
+          context.body = content;
+        },
+        setHeader: context.set.bind(context)
+      }, next);
+      console.log('dev');
+    });
+  }
+
+  return async (context, next) => {
+    await middleware(context, next);
+    console.log('await');
   };
 }
 
 function koaHotware (compiler, options) {
   const hot = hotMiddleware(compiler, options);
 
-  return async (ctx, next) => {
+  return async (context, next) => {
     let stream = new PassThrough();
-    ctx.body = stream;
+    context.body = stream;
 
-    await hot(ctx.req, {
+    await hot(context.req, {
       write: stream.write.bind(stream),
       writeHead: (state, headers) => {
-        ctx.state = state;
-        ctx.set(headers);
+        context.state = state;
+        context.set(headers);
       }
     }, next);
   };

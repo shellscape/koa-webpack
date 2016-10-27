@@ -16,6 +16,10 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
+var _promise = require('babel-runtime/core-js/promise');
+
+var _promise2 = _interopRequireDefault(_promise);
+
 var _webpack = require('webpack');
 
 var _webpack2 = _interopRequireDefault(_webpack);
@@ -51,21 +55,42 @@ function koaDevware(compiler, options) {
 
   var dev = (0, _webpackDevMiddleware2.default)(compiler, options);
 
+  function middleware(context, next) {
+    return new _promise2.default(function (resolve, reject) {
+      // https://github.com/webpack/docs/wiki/plugins#donestats-stats
+      compiler.plugin('done', function (stats) {
+        console.log('done');
+        resolve(stats);
+      });
+
+      compiler.plugin('failed', function (error) {
+        console.log('failed');
+        reject(error);
+      });
+
+      dev(context.req, {
+        end: function end(content) {
+          context.body = content;
+        },
+        setHeader: context.set.bind(context)
+      }, next);
+      console.log('dev');
+    });
+  }
+
   return function () {
-    var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(ctx, next) {
+    var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(context, next) {
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return dev(ctx.req, {
-                end: function end(content) {
-                  ctx.body = content;
-                },
-                setHeader: ctx.set.bind(ctx)
-              }, next);
+              return middleware(context, next);
 
             case 2:
+              console.log('await');
+
+            case 3:
             case 'end':
               return _context.stop();
           }
@@ -85,7 +110,7 @@ function koaHotware(compiler, options) {
   var hot = (0, _webpackHotMiddleware2.default)(compiler, options);
 
   return function () {
-    var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(ctx, next) {
+    var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(context, next) {
       var stream;
       return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
@@ -93,14 +118,14 @@ function koaHotware(compiler, options) {
             case 0:
               stream = new _stream.PassThrough();
 
-              ctx.body = stream;
+              context.body = stream;
 
               _context2.next = 4;
-              return hot(ctx.req, {
+              return hot(context.req, {
                 write: stream.write.bind(stream),
                 writeHead: function writeHead(state, headers) {
-                  ctx.state = state;
-                  ctx.set(headers);
+                  context.state = state;
+                  context.set(headers);
                 }
               }, next);
 
