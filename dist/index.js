@@ -70,12 +70,10 @@ function koaDevware(compiler, options) {
     return new _promise2.default(function (resolve, reject) {
       // https://github.com/webpack/docs/wiki/plugins#donestats-stats
       compiler.plugin('done', function (stats) {
-        console.log('done');
         resolve(stats);
       });
 
       compiler.plugin('failed', function (error) {
-        console.log('failed');
         reject(error);
       });
 
@@ -85,7 +83,6 @@ function koaDevware(compiler, options) {
         },
         setHeader: context.set.bind(context)
       }, next);
-      console.log('dev');
     });
   }
 
@@ -99,9 +96,6 @@ function koaDevware(compiler, options) {
               return middleware(context, next);
 
             case 2:
-              console.log('await');
-
-            case 3:
             case 'end':
               return _context.stop();
           }
