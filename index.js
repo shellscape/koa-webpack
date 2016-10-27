@@ -13,12 +13,10 @@ function koaDevware (compiler, options) {
     return new Promise((resolve, reject) => {
       // https://github.com/webpack/docs/wiki/plugins#donestats-stats
       compiler.plugin('done', (stats) => {
-        console.log('done');
         resolve(stats);
       });
 
       compiler.plugin('failed', (error) => {
-        console.log('failed');
         reject(error);
       });
 
@@ -28,13 +26,11 @@ function koaDevware (compiler, options) {
         },
         setHeader: context.set.bind(context)
       }, next);
-      console.log('dev');
     });
   }
 
   return async (context, next) => {
     await middleware(context, next);
-    console.log('await');
   };
 }
 
