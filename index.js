@@ -15,6 +15,10 @@ function koaDevware (compiler, options) {
         resolve(true);
       });
 
+      compiler.plugin('failed', (error) => {
+        reject(error);
+      });
+
       dev(context.req, {
         end: (content) => {
           context.body = content;
