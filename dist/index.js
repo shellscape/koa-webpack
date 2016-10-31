@@ -57,13 +57,8 @@ function koaDevware(compiler, options) {
 
   function middleware(context, next) {
     return new _promise2.default(function (resolve, reject) {
-      // https://github.com/webpack/docs/wiki/plugins#donestats-stats
-      compiler.plugin('done', function (stats) {
-        resolve(stats);
-      });
-
-      compiler.plugin('failed', function (error) {
-        reject(error);
+      dev.waitUntilValid(function () {
+        resolve(true);
       });
 
       dev(context.req, {
