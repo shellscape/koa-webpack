@@ -27,7 +27,7 @@ default Gulp task is the linting task, and can be executed like so:
 
 ```bash
 gulp
-``
+```
 
 Please don't change variable or parameter names to match your
 personal prefrences, unless the change is part of a refactor
