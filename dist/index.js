@@ -143,7 +143,7 @@ exports.default = function (options) {
   options = (0, _assign2.default)(defaults, options);
 
   var config = options.config,
-    compiler = options.compiler;
+      compiler = options.compiler;
 
   if (!config) {
     config = require(path.join(_appRootPath2.default.path, 'webpack.config.js'));
