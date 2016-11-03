@@ -27,7 +27,7 @@ function koaDevware (compiler, options) {
       end: (content) => {
         context.body = content;
       },
-      setHeader: context.set.bind(context),
+      setHeader: context.set.bind(context)
     }, next);
   };
 }
