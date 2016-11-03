@@ -1,0 +1,18 @@
+sudo: false
+language: node_js
+node_js:
+  - 5
+  - 6
+  - 7
+
+before_script:
+  - node --version
+  - npm --version
+
+script:
+  - npm install -g gulp 2>&1 >/dev/null
+  - npm install 2>&1 >/dev/null
+  - gulp
+
+matrix:
+  fast_finish: true
