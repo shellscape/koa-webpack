@@ -9,27 +9,26 @@ import * as path from 'path';
 function koaDevware (compiler, options) {
   const dev = devMiddleware(compiler, options);
 
-  function middleware (context, next) {
+  function waitUntilValid() {
     return new Promise((resolve, reject) => {
       dev.waitUntilValid(() => {
-        resolve(true);
+        resolve();
       });
 
       compiler.plugin('failed', (error) => {
         reject(error);
       });
-
-      dev(context.req, {
-        end: (content) => {
-          context.body = content;
-        },
-        setHeader: context.set.bind(context)
-      }, next);
     });
   }
 
-  return async (context, next) => {
-    await middleware(context, next);
+  return async (ctx, next) => {
+    await waitUntilValid();
+    await dev(ctx.req, {
+      end: (content) => {
+        ctx.body = content;
+      },
+      setHeader: ctx.set.bind(ctx),
+    }, next);
   };
 }
 
@@ -45,7 +44,7 @@ function koaHotware (compiler, options) {
       writeHead: (state, headers) => {
         context.state = state;
         context.set(headers);
-      }
+      },
     }, next);
   };
 }
@@ -73,6 +72,6 @@ export default (options) => {
 
   return compose([
     koaDevware(compiler, options.dev),
-    koaHotware(compiler, options.hot)
+    koaHotware(compiler, options.hot),
   ]);
 };
