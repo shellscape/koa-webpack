@@ -9,10 +9,10 @@ import * as path from 'path';
 function koaDevware (compiler, options) {
   const dev = devMiddleware(compiler, options);
 
-  function waitUntilValid() {
+  function waitUntilValidOrFailed() {
     return new Promise((resolve, reject) => {
       dev.waitUntilValid(() => {
-        resolve();
+        resolve(true);
       });
 
       compiler.plugin('failed', (error) => {
@@ -21,13 +21,13 @@ function koaDevware (compiler, options) {
     });
   }
 
-  return async (ctx, next) => {
-    await waitUntilValid();
-    await dev(ctx.req, {
+  return async (context, next) => {
+    await waitUntilValidOrFailed();
+    await dev(context.req, {
       end: (content) => {
-        ctx.body = content;
+        context.body = content;
       },
-      setHeader: ctx.set.bind(ctx),
+      setHeader: context.set.bind(context),
     }, next);
   };
 }
@@ -44,7 +44,7 @@ function koaHotware (compiler, options) {
       writeHead: (state, headers) => {
         context.state = state;
         context.set(headers);
-      },
+      }
     }, next);
   };
 }
@@ -72,6 +72,6 @@ export default (options) => {
 
   return compose([
     koaDevware(compiler, options.dev),
-    koaHotware(compiler, options.hot),
+    koaHotware(compiler, options.hot)
   ]);
 };

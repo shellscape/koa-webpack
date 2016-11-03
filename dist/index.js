@@ -55,7 +55,7 @@ function koaDevware(compiler, options) {
 
   var dev = (0, _webpackDevMiddleware2.default)(compiler, options);
 
-  function middleware(context, next) {
+  function waitUntilValidOrFailed() {
     return new _promise2.default(function (resolve, reject) {
       dev.waitUntilValid(function () {
         resolve(true);
@@ -64,13 +64,6 @@ function koaDevware(compiler, options) {
       compiler.plugin('failed', function (error) {
         reject(error);
       });
-
-      dev(context.req, {
-        end: function end(content) {
-          context.body = content;
-        },
-        setHeader: context.set.bind(context)
-      }, next);
     });
   }
 
@@ -81,9 +74,18 @@ function koaDevware(compiler, options) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return middleware(context, next);
+              return waitUntilValidOrFailed();
 
             case 2:
+              _context.next = 4;
+              return dev(context.req, {
+                end: function end(content) {
+                  context.body = content;
+                },
+                setHeader: context.set.bind(context)
+              }, next);
+
+            case 4:
             case 'end':
               return _context.stop();
           }

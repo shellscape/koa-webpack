@@ -1,10 +1,12 @@
 {
   "name": "koa-webpack",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Development and Hot Reload Middleware for Koa2",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp build",
+    "lint": "gulp lint"
   },
   "repository": {
     "type": "git",
