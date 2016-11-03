@@ -105,3 +105,17 @@ The `dev` property should contain options for `webpack-hot-middleware`, a list o
 which is available at [webpack-hot-middleware](https://github.com/webpack/webpack-hot-middleware).
 Omitting this property will result in `webpack-hot-middleware` using its default
 options.
+
+## Building
+
+```bash
+npm install
+npm install gulp -g
+gulp build
+```
+
+The `dist` directory will contain the `index.js` file that the module uses as the entry point.
+
+## Contributing
+
+We welcome your contributions! Please have a read of [CONTRIBUTING](CONTRIBUTING.md).
