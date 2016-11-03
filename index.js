@@ -73,7 +73,7 @@ export default (options) => {
   let config = options.config,
     compiler = options.compiler;
 
-  if (!config) {
+  if (!config && (!compiler || !options.dev.publicPath)) {
     config = require(path.join(root.path, 'webpack.config.js'));
   }
 
