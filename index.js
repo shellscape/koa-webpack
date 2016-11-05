@@ -20,7 +20,7 @@ import * as path from 'path';
 function koaDevware (compiler, options) {
   const dev = devMiddleware(compiler, options);
 
-  function middleware (context, next) {
+  function waitUntilValidOrFailed() {
     return new Promise((resolve, reject) => {
       dev.waitUntilValid(() => {
         resolve(true);
@@ -29,18 +29,17 @@ function koaDevware (compiler, options) {
       compiler.plugin('failed', (error) => {
         reject(error);
       });
-
-      dev(context.req, {
-        end: (content) => {
-          context.body = content;
-        },
-        setHeader: context.set.bind(context)
-      }, next);
     });
   }
 
   return async (context, next) => {
-    await middleware(context, next);
+    await waitUntilValidOrFailed();
+    await dev(context.req, {
+      end: (content) => {
+        context.body = content;
+      },
+      setHeader: context.set.bind(context)
+    }, next);
   };
 }
 
