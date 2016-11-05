@@ -61,12 +61,20 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * @method koaDevware
+ * @desc   Middleware for Koa to proxy webpack-dev-middleware
+ **/
 function koaDevware(compiler, options) {
   var _this = this;
 
   var dev = (0, _webpackDevMiddleware2.default)(compiler, options);
 
-  function middleware(context, next) {
+  /**
+   * @method waitMiddleware
+   * @desc   Provides blocking for the Webpack processes to complete.
+   **/
+  function waitMiddleware() {
     return new _promise2.default(function (resolve, reject) {
       dev.waitUntilValid(function () {
         resolve(true);
@@ -75,13 +83,6 @@ function koaDevware(compiler, options) {
       compiler.plugin('failed', function (error) {
         reject(error);
       });
-
-      dev(context.req, {
-        end: function end(content) {
-          context.body = content;
-        },
-        setHeader: context.set.bind(context)
-      }, next);
     });
   }
 
@@ -92,9 +93,18 @@ function koaDevware(compiler, options) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return middleware(context, next);
+              return waitMiddleware();
 
             case 2:
+              _context.next = 4;
+              return dev(context.req, {
+                end: function end(content) {
+                  context.body = content;
+                },
+                setHeader: context.set.bind(context)
+              }, next);
+
+            case 4:
             case 'end':
               return _context.stop();
           }
@@ -108,6 +118,10 @@ function koaDevware(compiler, options) {
   }();
 }
 
+/**
+ * @method koaHotware
+ * @desc   Middleware for Koa to proxy webpack-hot-middleware
+ **/
 function koaHotware(compiler, options) {
   var _this2 = this;
 
@@ -146,6 +160,10 @@ function koaHotware(compiler, options) {
     };
   }();
 }
+
+/**
+ * The entry point for the Koa middleware.
+ **/
 
 exports.default = function (options) {
 
