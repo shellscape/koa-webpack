@@ -1,4 +1,4 @@
-# koa-webpack
+# koa-webpack [![Build Status](https://travis-ci.org/shellscape/koa-webpack.svg?branch=master)](https://travis-ci.org/shellscape/koa-webpack)
 
 Development and Hot Module Reload Middleware for Koa2, in a single middleware module.
 
