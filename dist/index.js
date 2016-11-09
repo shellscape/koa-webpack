@@ -163,16 +163,22 @@ exports.default = function (options) {
   var config = options.config,
       compiler = options.compiler;
 
-  if (!config) {
-    config = require(path.join(_appRootPath2.default.path, 'webpack.config.js'));
-  }
-
   if (!compiler) {
+    if (!config) {
+      config = require(path.join(_appRootPath2.default.path, 'webpack.config.js'));
+    }
+
     compiler = (0, _webpack2.default)(config);
   }
 
   if (!options.dev.publicPath) {
-    options.dev.publicPath = config.output.publicPath;
+    var publicPath = compiler.options.output.publicPath;
+
+    if (!publicPath) {
+      throw new Error('koa-webpack: publicPath must be set on `dev` options, or in a compiler\'s `output` configuration.');
+    }
+
+    options.dev.publicPath = publicPath;
   }
 
   return (0, _koaCompose2.default)([koaDevware(compiler, options.dev), koaHotware(compiler, options.hot)]);

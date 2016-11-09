@@ -73,16 +73,22 @@ export default (options) => {
   let config = options.config,
     compiler = options.compiler;
 
-  if (!config) {
-    config = require(path.join(root.path, 'webpack.config.js'));
-  }
-
   if (!compiler) {
+    if (!config) {
+      config = require(path.join(root.path, 'webpack.config.js'));
+    }
+
     compiler = Webpack(config);
   }
 
   if (!options.dev.publicPath) {
-    options.dev.publicPath = config.output.publicPath;
+    let publicPath = compiler.options.output.publicPath;
+
+    if (!publicPath) {
+      throw new Error('koa-webpack: publicPath must be set on `dev` options, or in a compiler\'s `output` configuration.');
+    }
+
+    options.dev.publicPath = publicPath;
   }
 
   return compose([
