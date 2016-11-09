@@ -1,6 +1,6 @@
 {
   "name": "koa-webpack",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Development and Hot Reload Middleware for Koa2",
   "main": "dist/index.js",
   "scripts": {
