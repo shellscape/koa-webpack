@@ -1,6 +1,6 @@
 {
   "name": "koa-webpack",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Development and Hot Reload Middleware for Koa2",
   "main": "dist/index.js",
   "scripts": {
@@ -39,6 +39,6 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^3.0.1",
-    "webpack": "^2.1.0-beta.25"
+    "webpack": "^2.1.0-beta.27"
   }
 }
