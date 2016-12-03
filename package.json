@@ -23,7 +23,7 @@
     "webpack-hot-middleware": "^2.13.0"
   },
   "peerDependencies": {
-    "webpack": "2.1.x"
+    "webpack": "~2.1.0-beta.27"
   },
   "devDependencies": {
     "babel": "^6.5.2",
