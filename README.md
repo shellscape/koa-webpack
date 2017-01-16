@@ -101,7 +101,7 @@ options.
 Type: `Object`  
 `optional`
 
-The `dev` property should contain options for `webpack-hot-middleware`, a list of
+The `hot` property should contain options for `webpack-hot-middleware`, a list of
 which is available at [webpack-hot-middleware](https://github.com/glenjamin/webpack-hot-middleware).
 Omitting this property will result in `webpack-hot-middleware` using its default
 options.
