@@ -23,7 +23,7 @@
     "webpack-hot-middleware": "^2.13.0"
   },
   "peerDependencies": {
-    "webpack": "~2.1.0-beta.27"
+    "webpack": "~2.2.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -39,6 +39,6 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^3.0.1",
-    "webpack": "^2.1.0-beta.27"
+    "webpack": "^2.2.0"
   }
 }
