@@ -106,6 +106,19 @@ which is available at [webpack-hot-middleware](https://github.com/glenjamin/webp
 Omitting this property will result in `webpack-hot-middleware` using its default
 options.
 
+## Access to webpack-hot-middleware and webpack-dev-middleware
+
+As of `0.2.1`, you can access the webpack middleware directly. This was enabled
+by request as some power users wanted to do more with the composed middleware
+than is available through pure config.
+
+```js
+import middleware from 'koa-webpack';
+
+// middleware.devMiddleware
+// middleware.hotMiddleware
+```
+
 ## Building
 
 ```bash
