@@ -153,8 +153,7 @@ function koaHotware(compiler, options) {
 /**
  * The entry point for the Koa middleware.
  **/
-
-exports.default = function (options) {
+function fn(options) {
 
   var defaults = { dev: {}, hot: {} };
 
@@ -184,4 +183,5 @@ exports.default = function (options) {
   return (0, _koaCompose2.default)([koaDevware(compiler, options.dev), koaHotware(compiler, options.hot)]);
 };
 
+exports.default = (0, _assign2.default)(fn, { devMiddleware: _webpackDevMiddleware2.default, hotMiddleware: _webpackHotMiddleware2.default });
 module.exports = exports['default'];
