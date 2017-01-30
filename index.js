@@ -64,7 +64,7 @@ function koaHotware (compiler, options) {
 /**
  * The entry point for the Koa middleware.
  **/
-export default (options) => {
+function fn (options) {
 
   const defaults = { dev: {}, hot: {} };
 
@@ -96,3 +96,5 @@ export default (options) => {
     koaHotware(compiler, options.hot)
   ]);
 };
+
+export default Object.assign(fn, { devMiddleware, hotMiddleware });
