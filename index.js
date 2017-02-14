@@ -60,12 +60,12 @@ function koaHotware (compiler, options) {
 
   return async (context, next) => {
     let stream = new PassThrough();
-    context.body = stream;
 
     await hot(context.req, {
       write: stream.write.bind(stream),
-      writeHead: (state, headers) => {
-        context.state = state;
+      writeHead: (status, headers) => {
+        context.body = stream;
+        context.status = status;
         context.set(headers);
       }
     }, next);
