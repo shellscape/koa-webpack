@@ -124,19 +124,17 @@ function koaHotware(compiler, options) {
           switch (_context2.prev = _context2.next) {
             case 0:
               stream = new _stream.PassThrough();
-
-              context.body = stream;
-
-              _context2.next = 4;
+              _context2.next = 3;
               return hot(context.req, {
                 write: stream.write.bind(stream),
-                writeHead: function writeHead(state, headers) {
-                  context.state = state;
+                writeHead: function writeHead(status, headers) {
+                  context.body = stream;
+                  context.status = status;
                   context.set(headers);
                 }
               }, next);
 
-            case 4:
+            case 3:
             case 'end':
               return _context2.stop();
           }
