@@ -115,8 +115,16 @@ than is available through pure config.
 ```js
 import middleware from 'koa-webpack';
 
-// middleware.devMiddleware
-// middleware.hotMiddleware
+const koaWebpackMiddleware = middleware({
+  compiler,
+  dev: { publicPath: '/' },
+  hot: {
+    log () { }
+  }
+})
+
+// koaWebpackMiddleware.devMiddleware
+// koaWebpackMiddleware.hotMiddleware
 ```
 
 ## Building

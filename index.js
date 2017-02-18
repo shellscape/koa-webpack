@@ -29,7 +29,7 @@ function koaDevware (compiler, options) {
     });
   }
 
-  return async (context, next) => {
+  async function koaMiddleware (context, next) {
     await waitMiddleware();
     await dev(context.req, {
       end: (content) => {
@@ -38,6 +38,8 @@ function koaDevware (compiler, options) {
       setHeader: context.set.bind(context)
     }, next);
   };
+
+  return Object.assign(koaMiddleware, { dev })
 }
 
 /**
@@ -47,7 +49,7 @@ function koaDevware (compiler, options) {
 function koaHotware (compiler, options) {
   const hot = hotMiddleware(compiler, options);
 
-  return async (context, next) => {
+  async function koaMiddleware (context, next) {
     let stream = new PassThrough();
 
     await hot(context.req, {
@@ -59,12 +61,14 @@ function koaHotware (compiler, options) {
       }
     }, next);
   };
+
+  return Object.assign(koaMiddleware, { hot })
 }
 
 /**
  * The entry point for the Koa middleware.
  **/
-function fn (options) {
+export default function (options) {
 
   const defaults = { dev: {}, hot: {} };
 
@@ -91,10 +95,12 @@ function fn (options) {
     options.dev.publicPath = publicPath;
   }
 
-  return compose([
-    koaDevware(compiler, options.dev),
-    koaHotware(compiler, options.hot)
-  ]);
-};
+  const koaDevMiddleware = koaDevware(compiler, options.dev)
+  const koaHotMiddleware = koaHotware(compiler, options.hot)
+  const koaMiddleware = compose([koaDevMiddleware, koaHotMiddleware])
 
-export default Object.assign(fn, { devMiddleware, hotMiddleware });
+  return Object.assign(koaMiddleware, {
+    devMiddleware: koaDevMiddleware.dev,
+    hotMiddleware: koaHotMiddleware.hot
+  });
+};
