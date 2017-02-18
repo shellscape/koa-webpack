@@ -20,6 +20,44 @@ var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
 
+exports.default = function (options) {
+
+  var defaults = { dev: {}, hot: {} };
+
+  options = (0, _assign2.default)(defaults, options);
+
+  var config = options.config,
+      compiler = options.compiler,
+      koaDevMiddleware = void 0,
+      koaHotMiddleware = void 0,
+      koaMiddleware = void 0;
+
+  if (!compiler) {
+    if (!config) {
+      config = require(path.join(_appRootPath2.default.path, 'webpack.config.js'));
+    }
+
+    compiler = (0, _webpack2.default)(config);
+  }
+
+  if (!options.dev.publicPath) {
+    var publicPath = compiler.options.output.publicPath;
+
+    if (!publicPath) {
+      throw new Error('koa-webpack: publicPath must be set on `dev` options, or in a compiler\'s `output` configuration.');
+    }
+
+    options.dev.publicPath = publicPath;
+  }
+
+  koaDevMiddleware = koaDevware(compiler, options.dev), koaHotMiddleware = koaHotware(compiler, options.hot), koaMiddleware = (0, _koaCompose2.default)([koaDevMiddleware, koaHotMiddleware]);
+
+  return (0, _assign2.default)(koaMiddleware, {
+    devMiddleware: koaDevMiddleware.dev,
+    hotMiddleware: koaHotMiddleware.hot
+  });
+};
+
 var _webpack = require('webpack');
 
 var _webpack2 = _interopRequireDefault(_webpack);
@@ -55,27 +93,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @desc   Middleware for Koa to proxy webpack-dev-middleware
  **/
 function koaDevware(compiler, options) {
-  var _this = this;
-
-  var dev = (0, _webpackDevMiddleware2.default)(compiler, options);
-
-  /**
-   * @method waitMiddleware
-   * @desc   Provides blocking for the Webpack processes to complete.
-   **/
-  function waitMiddleware() {
-    return new _promise2.default(function (resolve, reject) {
-      dev.waitUntilValid(function () {
-        resolve(true);
-      });
-
-      compiler.plugin('failed', function (error) {
-        reject(error);
-      });
-    });
-  }
-
-  return function () {
+  var koaMiddleware = function () {
     var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(context, next) {
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
@@ -98,13 +116,35 @@ function koaDevware(compiler, options) {
               return _context.stop();
           }
         }
-      }, _callee, _this);
+      }, _callee, this);
     }));
 
-    return function (_x, _x2) {
+    return function koaMiddleware(_x, _x2) {
       return _ref.apply(this, arguments);
     };
   }();
+
+  var dev = (0, _webpackDevMiddleware2.default)(compiler, options);
+
+  /**
+   * @method waitMiddleware
+   * @desc   Provides blocking for the Webpack processes to complete.
+   **/
+  function waitMiddleware() {
+    return new _promise2.default(function (resolve, reject) {
+      dev.waitUntilValid(function () {
+        resolve(true);
+      });
+
+      compiler.plugin('failed', function (error) {
+        reject(error);
+      });
+    });
+  }
+
+  ;
+
+  return (0, _assign2.default)(koaMiddleware, { dev: dev });
 }
 
 /**
@@ -112,11 +152,7 @@ function koaDevware(compiler, options) {
  * @desc   Middleware for Koa to proxy webpack-hot-middleware
  **/
 function koaHotware(compiler, options) {
-  var _this2 = this;
-
-  var hot = (0, _webpackHotMiddleware2.default)(compiler, options);
-
-  return function () {
+  var koaMiddleware = function () {
     var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(context, next) {
       var stream;
       return _regenerator2.default.wrap(function _callee2$(_context2) {
@@ -139,47 +175,23 @@ function koaHotware(compiler, options) {
               return _context2.stop();
           }
         }
-      }, _callee2, _this2);
+      }, _callee2, this);
     }));
 
-    return function (_x3, _x4) {
+    return function koaMiddleware(_x3, _x4) {
       return _ref2.apply(this, arguments);
     };
   }();
+
+  var hot = (0, _webpackHotMiddleware2.default)(compiler, options);
+
+  ;
+
+  return (0, _assign2.default)(koaMiddleware, { hot: hot });
 }
 
 /**
  * The entry point for the Koa middleware.
  **/
-function fn(options) {
-
-  var defaults = { dev: {}, hot: {} };
-
-  options = (0, _assign2.default)(defaults, options);
-
-  var config = options.config,
-      compiler = options.compiler;
-
-  if (!compiler) {
-    if (!config) {
-      config = require(path.join(_appRootPath2.default.path, 'webpack.config.js'));
-    }
-
-    compiler = (0, _webpack2.default)(config);
-  }
-
-  if (!options.dev.publicPath) {
-    var publicPath = compiler.options.output.publicPath;
-
-    if (!publicPath) {
-      throw new Error('koa-webpack: publicPath must be set on `dev` options, or in a compiler\'s `output` configuration.');
-    }
-
-    options.dev.publicPath = publicPath;
-  }
-
-  return (0, _koaCompose2.default)([koaDevware(compiler, options.dev), koaHotware(compiler, options.hot)]);
-};
-
-exports.default = (0, _assign2.default)(fn, { devMiddleware: _webpackDevMiddleware2.default, hotMiddleware: _webpackHotMiddleware2.default });
+;
 module.exports = exports['default'];

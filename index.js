@@ -39,7 +39,7 @@ function koaDevware (compiler, options) {
     }, next);
   };
 
-  return Object.assign(koaMiddleware, { dev })
+  return Object.assign(koaMiddleware, { dev });
 }
 
 /**
@@ -62,7 +62,7 @@ function koaHotware (compiler, options) {
     }, next);
   };
 
-  return Object.assign(koaMiddleware, { hot })
+  return Object.assign(koaMiddleware, { hot });
 }
 
 /**
@@ -75,7 +75,10 @@ export default function (options) {
   options = Object.assign(defaults, options);
 
   let config = options.config,
-    compiler = options.compiler;
+    compiler = options.compiler,
+    koaDevMiddleware,
+    koaHotMiddleware,
+    koaMiddleware;
 
   if (!compiler) {
     if (!config) {
@@ -95,9 +98,9 @@ export default function (options) {
     options.dev.publicPath = publicPath;
   }
 
-  const koaDevMiddleware = koaDevware(compiler, options.dev)
-  const koaHotMiddleware = koaHotware(compiler, options.hot)
-  const koaMiddleware = compose([koaDevMiddleware, koaHotMiddleware])
+  koaDevMiddleware = koaDevware(compiler, options.dev),
+  koaHotMiddleware = koaHotware(compiler, options.hot),
+  koaMiddleware = compose([koaDevMiddleware, koaHotMiddleware]);
 
   return Object.assign(koaMiddleware, {
     devMiddleware: koaDevMiddleware.dev,
