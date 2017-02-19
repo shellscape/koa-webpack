@@ -31,6 +31,8 @@ var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
 
+exports.default = fn;
+
 var _webpack = require('webpack');
 
 var _webpack2 = _interopRequireDefault(_webpack);
@@ -65,10 +67,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @method koaDevware
  * @desc   Middleware for Koa to proxy webpack-dev-middleware
  **/
-function koaDevware(compiler, options) {
+function koaDevware(dev, compiler) {
   var _this = this;
-
-  var dev = (0, _webpackDevMiddleware2.default)(compiler, options);
 
   /**
    * @method waitMiddleware
@@ -122,10 +122,8 @@ function koaDevware(compiler, options) {
  * @method koaHotware
  * @desc   Middleware for Koa to proxy webpack-hot-middleware
  **/
-function koaHotware(compiler, options) {
+function koaHotware(hot, compiler) {
   var _this2 = this;
-
-  var hot = (0, _webpackHotMiddleware2.default)(compiler, options);
 
   return function () {
     var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(context, next) {
@@ -189,8 +187,11 @@ function fn(options) {
     options.dev.publicPath = publicPath;
   }
 
-  return (0, _koaCompose2.default)([koaDevware(compiler, options.dev), koaHotware(compiler, options.hot)]);
-};
+  var dev = (0, _webpackDevMiddleware2.default)(compiler, options.dev);
+  var hot = (0, _webpackHotMiddleware2.default)(compiler, options.hot);
 
-exports.default = (0, _assign2.default)(fn, { devMiddleware: _webpackDevMiddleware2.default, hotMiddleware: _webpackHotMiddleware2.default });
+  var middleware = (0, _koaCompose2.default)([koaDevware(dev, compiler), koaHotware(hot, compiler)]);
+
+  return (0, _assign2.default)(middleware, { dev: dev, hot: hot });
+};
 module.exports = exports['default'];
