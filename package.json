@@ -19,11 +19,9 @@
   "dependencies": {
     "app-root-path": "^2.0.1",
     "koa-compose": "^3.1.0",
+    "webpack": "~2.2.0",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-hot-middleware": "^2.13.0"
-  },
-  "peerDependencies": {
-    "webpack": "~2.2.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -36,6 +34,7 @@
     "babel-register": "^6.16.3",
     "del": "^2.2.2",
     "eslint": "^3.8.1",
+    "eslint-config-shellscape": "^1.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^3.0.1",
