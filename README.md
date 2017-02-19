@@ -1,6 +1,6 @@
 # koa-webpack [![Build Status](https://travis-ci.org/shellscape/koa-webpack.svg?branch=master)](https://travis-ci.org/shellscape/koa-webpack)
 
-Development and Hot Module Reload Middleware for Koa2, in a single middleware module.
+Development and Hot Module Reload Middleware for **Koa2**, in a single middleware module.
 
 This module wraps and composes `webpack-dev-middleware` and `webpack-hot-middleware`
 into a single middleware module, allowing for quick and concise implementation.
@@ -37,6 +37,29 @@ const app = new Koa();
 app.use(middleware({
   // options
 }))
+```
+
+### Accessing the Underlying Middleware
+
+In some cases, you may have the need to access the `webpack-dev-middleware` or
+`webpack-hot-middleware` instances that this module composes. As of `v0.3.0` you
+can access both by using the following pattern:
+
+```js
+import Koa from 'koa';
+import koaWebpack from 'koa-webpack';
+
+const app = new Koa();
+const middleware = koaWebpack({
+  // options
+});
+
+app.use(middleware);
+
+function doSomething () {
+  middleware.hot.publish({ action: 'reload' })
+}
+
 ```
 
 ## Options

@@ -21,8 +21,7 @@ import * as path from 'path';
  * @method koaDevware
  * @desc   Middleware for Koa to proxy webpack-dev-middleware
  **/
-function koaDevware (compiler, options) {
-  const dev = devMiddleware(compiler, options);
+function koaDevware (dev, compiler) {
 
   /**
    * @method waitMiddleware
@@ -55,8 +54,7 @@ function koaDevware (compiler, options) {
  * @method koaHotware
  * @desc   Middleware for Koa to proxy webpack-hot-middleware
  **/
-function koaHotware (compiler, options) {
-  const hot = hotMiddleware(compiler, options);
+function koaHotware (hot, compiler) {
 
   return async (context, next) => {
     let stream = new PassThrough();
@@ -75,7 +73,7 @@ function koaHotware (compiler, options) {
 /**
  * The entry point for the Koa middleware.
  **/
-function fn (options) {
+export default function fn (options) {
 
   const defaults = { dev: {}, hot: {} };
 
@@ -102,10 +100,13 @@ function fn (options) {
     options.dev.publicPath = publicPath;
   }
 
-  return compose([
-    koaDevware(compiler, options.dev),
-    koaHotware(compiler, options.hot)
-  ]);
-};
+  const dev = devMiddleware(compiler, options.dev);
+  const hot = hotMiddleware(compiler, options.hot);
 
-export default Object.assign(fn, { devMiddleware, hotMiddleware });
+  const middleware = compose([
+    koaDevware(dev, compiler),
+    koaHotware(hot, compiler)
+  ]);
+
+  return Object.assign(middleware, { dev, hot });
+};
