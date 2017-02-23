@@ -101,7 +101,8 @@ function koaDevware(dev, compiler) {
                 end: function end(content) {
                   context.body = content;
                 },
-                setHeader: context.set.bind(context)
+                setHeader: context.set.bind(context),
+                locals: context.state
               }, next);
 
             case 4:
