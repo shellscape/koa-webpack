@@ -86,7 +86,7 @@ import config from './webpack.config.js';
 const compiler = Webpack(config);
 
 app.use(middleware({
-  compiler: compiler;
+  compiler: compiler
 }))
 ```
 
@@ -105,7 +105,7 @@ Example:
 import config from './webpack.config.js';
 
 app.use(middleware({
-  config: config;
+  config: config
 }))
 ```
 
