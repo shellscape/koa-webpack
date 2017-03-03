@@ -5,7 +5,7 @@ Development and Hot Module Reload Middleware for **Koa2**, in a single middlewar
 ## &nbsp;
 <p align="center">
   <b>:rocket: &nbsp; Are you ready to tackle ES6 and hone your JavaScript Skills?</b> &nbsp; :rocket:<br/>
-  Check out these outstanding <a href="https://es6.io/">ES6 courses</a> by <a href="https://github.com/wesbos">@wesbos</a>
+  Check out these outstanding <a href="https://es6.io/friend/POWELL">ES6 courses</a> by <a href="https://github.com/wesbos">@wesbos</a>
 </p>
 ---
 
