@@ -20,3 +20,9 @@ repository rather than pasting code. Otherwise, please paste relevant short snip
 ```js
 // app.js
 ```
+
+### Expected Behavior
+
+### Actual Behavior
+
+### How can we reproduce the behavior?
