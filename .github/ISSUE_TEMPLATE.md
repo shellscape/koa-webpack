@@ -2,9 +2,7 @@
 [composes](https://github.com/koajs/compose) webpack-hot-middleware and webpack-dev-middle for use with koa2.
 If you have arrived here because you cannot get [webpack-hot-middleware](https://github.com/glenjamin/webpack-hot-middlewar)
 or [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware/) working, please review the documentation
-for the respective middleware you are experiencing a problem with. Please remove this header to acknowledge this message.
-
-If you proceed with this form, please fill out *_all_* fields, or your issue may be closed as "invalid."
+for the respective middleware you are experiencing a problem with. If you proceed with this form, please fill out *_all_* fields, or your issue may be closed as "invalid." Please remove this header to acknowledge this message.
 
 * Node Version:
 * NPM Version:
