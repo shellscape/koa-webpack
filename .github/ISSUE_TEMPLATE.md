@@ -6,6 +6,7 @@ for the respective middleware you are experiencing a problem with. If you procee
 
 * Node Version:
 * NPM Version:
+* koa Version:
 * koa-wepback Version:
 
 If you have a large amount of code to share which demonstrates the problem you're experiencing, please provide a link to your
