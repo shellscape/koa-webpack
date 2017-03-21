@@ -7,6 +7,7 @@ Development and Hot Module Reload Middleware for **Koa2**, in a single middlewar
   <b>:rocket: &nbsp; Are you ready to tackle ES6 and hone your JavaScript Skills?</b> &nbsp; :rocket:<br/>
   Check out these outstanding <a href="https://es6.io/friend/POWELL">ES6 courses</a> by <a href="https://github.com/wesbos">@wesbos</a>
 </p>
+
 ---
 
 This module wraps and composes `webpack-dev-middleware` and `webpack-hot-middleware`
