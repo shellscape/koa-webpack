@@ -149,6 +149,12 @@ import middleware from 'koa-webpack';
 // middleware.devMiddleware
 // middleware.hotMiddleware
 ```
+## Using with koa-compress
+
+When using `koa-webpack` with [koa-compress](https://github.com/koajs/compress),
+you may experience issues with saving files and hot module reload. Please review 
+[this issue](https://github.com/shellscape/koa-webpack/issues/36#issuecomment-289565573)
+for more information and a workaround. 
 
 ## Building
 
