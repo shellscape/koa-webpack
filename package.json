@@ -18,7 +18,7 @@
   "homepage": "https://github.com/shellscape/koa-webpack#readme",
   "dependencies": {
     "app-root-path": "^2.0.1",
-    "koa-compose": "^3.1.0",
+    "koa-compose": "^4.0.0",
     "webpack": "~2.2.0",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-hot-middleware": "^2.13.0"
