@@ -81,13 +81,7 @@ export default function fn (options) {
   }
 
   if (!options.dev.publicPath) {
-    let publicPath = compiler.options.output.publicPath;
-
-    if (!publicPath) {
-      throw new Error('koa-webpack: publicPath must be set on `dev` options, or in a compiler\'s `output` configuration.');
-    }
-
-    options.dev.publicPath = publicPath;
+    options.dev.publicPath = compiler.options.output.publicPath || '/';
   }
 
   const dev = devMiddleware(compiler, options.dev);
