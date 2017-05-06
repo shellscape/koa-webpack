@@ -38,6 +38,6 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^3.0.1",
-    "webpack": "^2.5.0"
+    "webpack": "^2.5.1"
   }
 }
