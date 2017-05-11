@@ -30,13 +30,16 @@ function koaDevware (dev, compiler) {
 
   return async (context, next) => {
     await waitMiddleware();
-    await dev(context.req, {
-      end: (content) => {
-        context.body = content;
-      },
-      setHeader: context.set.bind(context),
-      locals: context.state
-    }, next);
+    await new Promise((resolve, reject) => {
+      dev(context.req, {
+        end: (content) => {
+          context.body = content;
+          resolve();
+        },
+        setHeader: context.set.bind(context),
+        locals: context.state
+      }, () => resolve(next()));
+    });
   };
 }
 
