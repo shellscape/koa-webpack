@@ -86,13 +86,18 @@ function koaDevware(dev, compiler) {
 
             case 2:
               _context.next = 4;
-              return dev(context.req, {
-                end: function end(content) {
-                  context.body = content;
-                },
-                setHeader: context.set.bind(context),
-                locals: context.state
-              }, next);
+              return new _promise2.default(function (resolve, reject) {
+                dev(context.req, {
+                  end: function end(content) {
+                    context.body = content;
+                    resolve();
+                  },
+                  setHeader: context.set.bind(context),
+                  locals: context.state
+                }, function () {
+                  return resolve(next());
+                });
+              });
 
             case 4:
             case 'end':
