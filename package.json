@@ -38,7 +38,7 @@
     "eslint-config-shellscape": "^1.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
-    "gulp-eslint": "^3.0.1",
+    "gulp-eslint": "^4.0.0",
     "koa": "^2.2.0",
     "mocha": "^3.3.0",
     "supertest": "^3.0.0",
