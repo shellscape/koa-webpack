@@ -55,7 +55,7 @@ function koaHotware (hot, compiler) {
     await hot(context.req, {
       write: stream.write.bind(stream),
       writeHead: (status, headers) => {
-        context.body = stream;
+        stream.pipe(context.res);
         context.status = status;
         context.set(headers);
       }
