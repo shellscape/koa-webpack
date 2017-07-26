@@ -156,6 +156,19 @@ you may experience issues with saving files and hot module reload. Please review
 [this issue](https://github.com/shellscape/koa-webpack/issues/36#issuecomment-289565573)
 for more information and a workaround. 
 
+## Using with Server-Side-Render
+
+When set `serverSideRender` to true in `config.dev`, you can access `webpackStats` from `ctx.state.webpackStats`.
+
+```javascript
+app.use(async (ctx, next) => {
+  const assetsByChunkName = ctx.state.webpackStats.toJson().assetsByChunkName;
+  // do something with assetsByChunkName
+})
+```
+
+For more detail please refer: [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware#server-side-rendering)
+
 ## Building
 
 ```bash
