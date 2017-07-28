@@ -158,7 +158,7 @@ for more information and a workaround.
 
 ## Using with Server-Side-Rendering
 
-When set `serverSideRender` to true in `config.dev`, `webpackStats` is accessible from `ctx.state.webpackStats`.
+When `serverSideRender` is set to true in `config.dev`, `webpackStats` is accessible from `ctx.state.webpackStats`.
 
 ```js
 app.use(async (ctx, next) => {
