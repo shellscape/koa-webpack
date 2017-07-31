@@ -27,7 +27,6 @@
     "webpack-hot-middleware": "^2.13.0"
   },
   "devDependencies": {
-    "babel": "^6.5.2",
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
