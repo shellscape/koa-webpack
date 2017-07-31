@@ -10,9 +10,7 @@ before_script:
   - npm --version
 
 script:
-  - npm install -g gulp 2>&1 >/dev/null
-  - npm install 2>&1 >/dev/null
-  - gulp
+  - npm test
 
 matrix:
   fast_finish: true
