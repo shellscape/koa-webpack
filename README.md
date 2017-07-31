@@ -1,5 +1,7 @@
 # koa-webpack [![Build Status](https://travis-ci.org/shellscape/koa-webpack.svg?branch=master)](https://travis-ci.org/shellscape/koa-webpack)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/shellscape/koa-webpack.svg)](https://greenkeeper.io/)
+
 Development and Hot Module Reload Middleware for **Koa2**, in a single middleware module.
 
 ## &nbsp;
