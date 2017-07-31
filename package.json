@@ -9,6 +9,9 @@
     "lint": "eslint index.js test/*.js",
     "test": "npm run lint && npm run bdd"
   },
+  "engines": {
+    "node": ">= 6.0.0"
+  },
   "repository": "shellscape/koa-webpack",
   "author": {
     "name": "Andrew Powell",
