@@ -4,18 +4,19 @@
   "description": "Development and Hot Reload Middleware for Koa2",
   "main": "dist/index.js",
   "scripts": {
-    "test": "eslint index.js test/*.js && mocha --compilers=js:babel-register"
+    "bdd": "mocha --compilers=js:babel-register",
+    "build": "babel index.js --out-dir dist",
+    "lint": "eslint index.js test/*.js",
+    "test": "npm run lint && npm run bdd"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shellscape/koa-webpack.git"
+  "repository": "shellscape/koa-webpack"
   },
-  "author": "Andrew Powell <andrew@shellscape.org>",
+  "author": {
+    "name": "Andrew Powell",
+    "email": "andrew@shellscape.org",
+    "url": "shellscape.org"
+  },
   "license": "MPL",
-  "bugs": {
-    "url": "https://github.com/shellscape/koa-webpack/issues"
-  },
-  "homepage": "https://github.com/shellscape/koa-webpack#readme",
   "dependencies": {
     "app-root-path": "^2.0.1",
     "koa-compose": "^4.0.0",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "babel": "^6.5.2",
+    "babel-cli": "^6.24.1",
     "babel-eslint": "^7.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
@@ -36,9 +38,6 @@
     "del": "^3.0.0",
     "eslint": "^4.1.0",
     "eslint-config-shellscape": "^1.0.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-eslint": "^4.0.0",
     "koa": "^2.2.0",
     "mocha": "^3.3.0",
     "supertest": "^3.0.0",
