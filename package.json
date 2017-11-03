@@ -21,6 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "app-root-path": "^2.0.1",
+    "babel-runtime": "^6.26.0",
     "koa-compose": "^4.0.0",
     "webpack": "^3.4.1",
     "webpack-dev-middleware": "^1.8.4",
