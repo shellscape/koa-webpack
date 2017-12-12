@@ -1,6 +1,6 @@
 {
   "name": "koa-webpack",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Development and Hot Reload Middleware for Koa2",
   "main": "dist/index.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "url": "shellscape.org"
   },
   "license": "MIT",
+  "types": "index.d.ts",
   "dependencies": {
     "app-root-path": "^2.0.1",
     "koa-compose": "^4.0.0",
@@ -27,6 +28,11 @@
     "webpack-hot-middleware": "^2.13.0"
   },
   "devDependencies": {
+    "@types/connect": "^3.4.31",
+    "@types/koa": "^2.0.42",
+    "@types/webpack": "^3.8.1",
+    "@types/webpack-dev-middleware": "^1.9.4",
+    "@types/webpack-hot-middleware": "^2.16.2",
     "babel": "^6.5.2",
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.0.0",
