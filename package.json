@@ -24,7 +24,7 @@
     "koa-compose": "^4.0.0",
     "merge-options": "^1.0.0",
     "webpack": "^3.4.1",
-    "webpack-dev-middleware": "^1.8.4",
+    "webpack-dev-middleware": "^2.0.3",
     "webpack-hot-middleware": "^2.13.0"
   },
   "devDependencies": {
