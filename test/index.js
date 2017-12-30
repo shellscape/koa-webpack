@@ -26,21 +26,21 @@ const DEFAULT_OPTIONS = {
     entry: path.resolve(__dirname, 'fixtures', 'input.js'),
     output: {
       path: path.resolve(__dirname, 'fixtures'),
-      filename: 'output.js',
-    },
+      filename: 'output.js'
+    }
   },
   dev: {
     publicPath: '/',
     noInfo: true,
-    quiet: true,
-  },
+    quiet: true
+  }
 };
 
 function buildOptions (options) {
   options = merge({}, DEFAULT_OPTIONS, options);
   return merge(options, {
     config: null,
-    compiler: Webpack(options.config),
+    compiler: Webpack(options.config)
   });
 };
 
@@ -93,7 +93,7 @@ describe('devMiddleware', () => {
         webpack,
         async (ctx) => {
           ctx.body = 'foo';
-        },
+        }
       ]);
 
     const { server, req } = setup({}, middleware);
