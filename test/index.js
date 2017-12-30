@@ -12,7 +12,8 @@
 import * as assert from 'assert';
 import * as path from 'path';
 
-import merge from 'deepmerge';
+import destroyable from 'server-destroy';
+import merge from 'merge-options';
 import Koa from 'koa';
 import compose from 'koa-compose';
 import request from 'supertest';
@@ -36,7 +37,7 @@ const DEFAULT_OPTIONS = {
 };
 
 function buildOptions (options) {
-  options = merge(DEFAULT_OPTIONS, options);
+  options = merge({}, DEFAULT_OPTIONS, options);
   return merge(options, {
     config: null,
     compiler: Webpack(options.config),
@@ -47,36 +48,46 @@ function defaultApp (middleware) {
   return middleware;
 }
 
-function requestWith (options, setupMiddleware = defaultApp) {
+function setup (options, setupMiddleware = defaultApp) {
   const app = new Koa();
   const webpackMiddleware = koaWebpack(buildOptions(options));
   app.use(setupMiddleware(webpackMiddleware));
   const server = app.listen();
-  return request(server);
+  const req = request(server);
+  destroyable(server);
+  return { server, req };
 };
 
 describe('devMiddleware', () => {
-  it('sends the result in watch mode', () => {
-    return requestWith({ dev: { lazy: false } })
-      .get('/output.js')
+  it('sends the result in watch mode', (done) => {
+    const { server, req } = setup({ dev: { lazy: false } });
+    req.get('/output.js')
       .expect(200)
       .expect(response => {
         assert.ok(/Hello world/.test(response.text),
           "Expected result to contain 'Hello world'");
+      })
+      .then(() => {
+        server.destroy();
+        done();
       });
   });
 
-  it('builds and sends the result in lazy mode', () => {
-    return requestWith({ dev: { lazy: true } })
-      .get('/output.js')
+  it('builds and sends the result in lazy mode', (done) => {
+    const { server, req } = setup({ dev: { lazy: true } });
+    req.get('/output.js')
       .expect(200)
       .expect(response => {
         assert.ok(/Hello world/.test(response.text),
           "Expected result to contain 'Hello world'");
+      })
+      .then(() => {
+        server.destroy();
+        done();
       });
   });
 
-  it('continues on if the file is not part of webpack', () => {
+  it('continues on if the file is not part of webpack', (done) => {
     const middleware = (webpack) =>
       compose([
         webpack,
@@ -85,8 +96,12 @@ describe('devMiddleware', () => {
         },
       ]);
 
-    return requestWith({}, middleware)
-      .get('/some-other-file.js')
-      .expect(200, 'foo');
+    const { server, req } = setup({}, middleware);
+    req.get('/some-other-file.js')
+      .expect(200, 'foo')
+      .then(() => {
+        server.destroy();
+        done();
+      });
   });
 });
