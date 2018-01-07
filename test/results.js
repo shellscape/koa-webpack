@@ -50,6 +50,19 @@ function setup(options, setupMiddleware = defaultApp) {
 }
 
 describe('devMiddleware', () => {
+  it('should provide access to middleware and client', (done) => {
+    const { middleware, server, req } = setup({ dev: { lazy: false } });
+
+    req.get('/output.js')
+      .then(() => {
+        assert(middleware.dev);
+        assert(middleware.client);
+
+        server.kill();
+        middleware.close(done);
+      });
+  });
+
   it('sends the result in watch mode', (done) => {
     const { middleware, req, server } = setup({ dev: { lazy: false } });
     req.get('/output.js')

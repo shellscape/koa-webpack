@@ -2,23 +2,6 @@
 
 Development and Hot Module Reload Middleware for **Koa2**, in a single middleware module.
 
-## Version 2 Breaking Changes
-
-As of version 2.0.0, Node v4 is no longer supported. The minimum version of Node
-supported is v6.11. Browser support is limited to those browsers which support
-_native_ `WebSocket`. That typically means the last two major versions of a
-browser. If you need support for older browsers, please use version 1.x of this
-module. If you would like to submit a fix for a 1.x version of the module, please
-submit that to the `1.x` branch.
-
-## &nbsp;
-<p align="center">
-  <b>:rocket: &nbsp; Are you ready to tackle ES6 and hone your JavaScript Skills?</b> &nbsp; :rocket:<br/>
-  Check out these outstanding <a href="https://es6.io/friend/POWELL">ES6 courses</a> by <a href="https://github.com/wesbos">@wesbos</a>
-</p>
-
----
-
 This module wraps and composes
 [`webpack-dev-middleware`](https://github.com/webpack/webpack-dev-middleware) and
 [`webpack-hot-client`](https://github.com/webpack-contrib/webpack-hot-client)
@@ -28,6 +11,15 @@ As an added bonus, it'll also use the installed `webpack` module from your proje
 and the `webpack.config.js` file in the root of your project, automagically, should
 you choose to let it. This negates the need for all of the repetitive setup and
 config that you get with `koa-webpack-middleware`.
+
+## Version 2 Breaking Changes
+
+As of version 2.0.0, Node v4 is no longer supported. The minimum version of Node
+supported is v6.11. Browser support is limited to those browsers which support
+_native_ `WebSocket`. That typically means the last two major versions of a
+browser. If you need support for older browsers, please use version 1.x of this
+module. If you would like to submit a fix for a 1.x version of the module, please
+submit that to the `1.x` branch.
 
 ## Getting Started
 
@@ -54,13 +46,25 @@ app.use(middleware({
 }))
 ```
 
-## Options
+## API
+
+### koaWebpack([options])
+
+Returns an `Object` containing:
+
+- `close(callback)` *(Function)* - Closes both the instance of `webpack-dev-middleware`
+and `webpack-dev-client`. Accepts a single `Function` callback parameter that is
+executed when complete.
+- `client` *(Object)* - An instance of `webpack-dev-client`.
+- `dev` *(Object)* - An instance of `webpack-dev-middleware`
+
+## options
 
 The middleware accepts an `options` Object, which can contain options for the
 `webpack-dev-middleware` and `webpack-hot-client` bundled with this module.
 The following is a property reference for the Object:
 
-### compiler
+#### compiler
 
 Type: `Object`  
 `optional`
@@ -82,7 +86,7 @@ app.use(middleware({
 }))
 ```
 
-### config
+#### config
 
 Type: `Object`  
 `optional`
@@ -101,7 +105,7 @@ app.use(middleware({
 }))
 ```
 
-### dev
+#### dev
 
 Type: `Object`  
 `optional`
@@ -111,7 +115,7 @@ which is available at [webpack-dev-middleware](https://github.com/webpack/webpac
 Omitting this property will result in `webpack-dev-middleware` using its default
 options.
 
-### hot
+#### hot
 
 Type: `Object`  
 `optional`
