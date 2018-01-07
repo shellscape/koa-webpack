@@ -1,96 +1,95 @@
-import * as assert from 'assert';
-import * as path from 'path';
 
-import destroyable from 'server-destroy';
-import merge from 'merge-options';
-import Koa from 'koa';
-import compose from 'koa-compose';
-import request from 'supertest';
-import Webpack from 'webpack';
-
-import koaWebpack from '../index';
+const assert = require('assert');
+const path = require('path');
+const killable = require('killable');
+const merge = require('merge-options');
+const Koa = require('koa');
+const compose = require('koa-compose');
+const request = require('supertest');
+const Webpack = require('webpack');
+const koaWebpack = require('../index');
 
 const DEFAULT_OPTIONS = {
   config: {
     entry: path.resolve(__dirname, 'fixtures', 'input.js'),
     output: {
       path: path.resolve(__dirname, 'fixtures'),
-      filename: 'output.js'
-    }
+      filename: 'output.js',
+    },
   },
   dev: {
     publicPath: '/',
-    noInfo: true,
-    quiet: true
-  }
+    logLevel: 'silent',
+  },
+  hot: {
+    logLevel: 'silent',
+  },
 };
 
-function buildOptions (options) {
-  options = merge({}, DEFAULT_OPTIONS, options);
+function buildOptions(opts) {
+  const options = merge({}, DEFAULT_OPTIONS, opts);
   return merge(options, {
     config: null,
-    compiler: Webpack(options.config)
+    compiler: Webpack(options.config),
   });
-};
+}
 
-function defaultApp (middleware) {
+function defaultApp(middleware) {
   return middleware;
 }
 
-function setup (options, setupMiddleware = defaultApp) {
+function setup(options, setupMiddleware = defaultApp) {
   const app = new Koa();
-  const webpackMiddleware = koaWebpack(buildOptions(options));
-  app.use(setupMiddleware(webpackMiddleware));
+  const middleware = koaWebpack(buildOptions(options));
+  app.use(setupMiddleware(middleware));
   const server = app.listen();
   const req = request(server);
-  destroyable(server);
-  return { server, req };
-};
+  killable(server);
+  return { middleware, req, server };
+}
 
 describe('devMiddleware', () => {
   it('sends the result in watch mode', (done) => {
-    const { server, req } = setup({ dev: { lazy: false } });
+    const { middleware, req, server } = setup({ dev: { lazy: false } });
     req.get('/output.js')
       .expect(200)
-      .expect(response => {
-        assert.ok(/Hello world/.test(response.text),
-          "Expected result to contain 'Hello world'");
+      .expect((response) => {
+        assert.ok(/Hello world/.test(response.text), "Expected result to contain 'Hello world'");
       })
       .then(() => {
-        server.destroy();
-        done();
+        server.kill();
+        middleware.close(done);
       });
   });
 
   it('builds and sends the result in lazy mode', (done) => {
-    const { server, req } = setup({ dev: { lazy: true } });
+    const { middleware, req, server } = setup({ dev: { lazy: true } });
     req.get('/output.js')
       .expect(200)
-      .expect(response => {
-        assert.ok(/Hello world/.test(response.text),
-          "Expected result to contain 'Hello world'");
+      .expect((response) => {
+        assert.ok(/Hello world/.test(response.text), "Expected result to contain 'Hello world'");
       })
       .then(() => {
-        server.destroy();
-        done();
+        server.kill();
+        middleware.close(done);
       });
   });
 
   it('continues on if the file is not part of webpack', (done) => {
-    const middleware = (webpack) =>
+    const mware = webpack =>
       compose([
         webpack,
         async (ctx) => {
-          ctx.body = 'foo';
-        }
+          ctx.body = 'foo'; // eslint-disable-line
+        },
       ]);
 
-    const { server, req } = setup({}, middleware);
+    const { middleware, req, server } = setup({}, mware);
     req.get('/some-other-file.js')
       .expect(200, 'foo')
       .then(() => {
-        server.destroy();
-        done();
+        server.kill();
+        middleware.close(done);
       });
   });
 });

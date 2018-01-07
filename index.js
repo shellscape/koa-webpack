@@ -1,22 +1,20 @@
-import Webpack from 'webpack';
-import devMiddleware from 'webpack-dev-middleware';
-import hotMiddleware from 'webpack-hot-middleware';
-import { PassThrough } from 'stream';
-import compose from 'koa-compose';
-import root from 'app-root-path';
-import * as path from 'path';
+
+const path = require('path');
+const Webpack = require('webpack');
+const devMiddleware = require('webpack-dev-middleware');
+const hotClient = require('webpack-hot-client');
+const root = require('app-root-path');
 
 /**
  * @method koaDevware
  * @desc   Middleware for Koa to proxy webpack-dev-middleware
  **/
-function koaDevware (dev, compiler) {
-
+function koaDevware(dev, compiler) {
   /**
    * @method waitMiddleware
    * @desc   Provides blocking for the Webpack processes to complete.
    **/
-  function waitMiddleware () {
+  function waitMiddleware() {
     return new Promise((resolve, reject) => {
       dev.waitUntilValid(() => {
         resolve(true);
@@ -30,53 +28,32 @@ function koaDevware (dev, compiler) {
 
   return async (context, next) => {
     await waitMiddleware();
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       dev(context.req, {
         end: (content) => {
-          context.body = content;
+          context.body = content; // eslint-disable-line no-param-reassign
           resolve();
         },
         setHeader: context.set.bind(context),
-        locals: context.state
+        locals: context.state,
       }, () => resolve(next()));
     });
   };
 }
 
 /**
- * @method koaHotware
- * @desc   Middleware for Koa to proxy webpack-hot-middleware
- **/
-function koaHotware (hot, compiler) {
-
-  return async (context, next) => {
-    let stream = new PassThrough();
-
-    await hot(context.req, {
-      write: stream.write.bind(stream),
-      writeHead: (status, headers) => {
-        context.body = stream;
-        context.status = status;
-        context.set(headers);
-      }
-    }, next);
-  };
-}
-
-/**
  * The entry point for the Koa middleware.
  **/
-export default function fn (options) {
-
+module.exports = function fn(opts) {
   const defaults = { dev: {}, hot: {} };
 
-  options = Object.assign(defaults, options);
+  const options = Object.assign(defaults, opts);
 
-  let config = options.config,
-    compiler = options.compiler;
+  let { compiler, config } = options;
 
   if (!compiler) {
     if (!config) {
+      // eslint-disable-next-line import/no-dynamic-require, global-require
       config = require(path.join(root.path, 'webpack.config.js'));
     }
 
@@ -84,7 +61,7 @@ export default function fn (options) {
   }
 
   if (!options.dev.publicPath) {
-    let publicPath = compiler.options.output.publicPath;
+    const { publicPath } = compiler.options.output;
 
     if (!publicPath) {
       throw new Error('koa-webpack: publicPath must be set on `dev` options, or in a compiler\'s `output` configuration.');
@@ -93,13 +70,14 @@ export default function fn (options) {
     options.dev.publicPath = publicPath;
   }
 
+  const client = hotClient(compiler, options.hot);
   const dev = devMiddleware(compiler, options.dev);
-  const hot = hotMiddleware(compiler, options.hot);
 
-  const middleware = compose([
-    koaDevware(dev, compiler),
-    koaHotware(hot, compiler)
-  ]);
-
-  return Object.assign(middleware, { dev, hot });
+  return Object.assign(koaDevware(dev, compiler), {
+    close(callback) {
+      dev.close(() => {
+        client.close(callback);
+      });
+    },
+  });
 };

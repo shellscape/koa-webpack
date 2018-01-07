@@ -1,4 +1,3 @@
 {
-  "extends": "shellscape",
-  "parser": "babel-eslint"
+  "extends": "webpack"
 }
