@@ -10,7 +10,7 @@ before_script:
   - npm --version
 
 script:
-  - npm ci
+  - npm run ci
 
 matrix:
   fast_finish: true
