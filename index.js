@@ -75,6 +75,8 @@ module.exports = function fn(opts) {
   const dev = devMiddleware(compiler, options.dev);
 
   return Object.assign(koaDevware(dev, compiler), {
+    dev,
+    client,
     close(callback) {
       dev.close(() => {
         client.close(callback);
