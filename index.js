@@ -1,3 +1,4 @@
+'use strict';
 
 const path = require('path');
 const Webpack = require('webpack');
@@ -26,19 +27,19 @@ function koaDevware(dev, compiler) {
     });
   }
 
-  return async (context, next) => {
-    await waitMiddleware();
-    await new Promise((resolve) => {
+  return (context, next) => Promise.all([
+    waitMiddleware(),
+    new Promise((resolve) => {
       dev(context.req, {
         end: (content) => {
           context.body = content; // eslint-disable-line no-param-reassign
           resolve();
         },
         setHeader: context.set.bind(context),
-        locals: context.state,
+        locals: context.state
       }, () => resolve(next()));
-    });
-  };
+    })
+  ]);
 }
 
 /**
@@ -78,6 +79,6 @@ module.exports = function fn(opts) {
       dev.close(() => {
         client.close(callback);
       });
-    },
+    }
   });
 };

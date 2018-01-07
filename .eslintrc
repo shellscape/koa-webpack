@@ -1,3 +1,10 @@
 {
-  "extends": "webpack"
+  "extends": "webpack",
+  "parserOptions": {
+    "sourceType": "script"
+  },
+  "rules": {
+    "comma-dangle": ["error", "never"],
+    "strict": ["error", "safe"]
+  }
 }

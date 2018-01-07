@@ -10,9 +10,10 @@
     "node": ">= 6.0.0"
   },
   "scripts": {
-    "bdd": "mocha --exit",
+    "ci": "npm run lint && npm run test",
+    "mocha": "mocha test/test.js --exit",
     "lint": "eslint index.js test/*.js",
-    "test": "npm run lint && npm run bdd"
+    "test": "npm run mocha"
   },
   "peerDependencies": {
     "webpack": "^2.2.0 || ^3.0.0 || ^4.0.0-alpha.2"
@@ -25,6 +26,7 @@
     "webpack-log": "^1.1.1"
   },
   "devDependencies": {
+    "babel-register": "^6.26.0",
     "deepmerge": "^2.0.1",
     "eslint": "^4.1.0",
     "eslint-config-webpack": "^1.2.5",

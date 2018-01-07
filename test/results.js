@@ -1,3 +1,4 @@
+'use strict';
 
 const assert = require('assert');
 const path = require('path');
@@ -14,23 +15,23 @@ const DEFAULT_OPTIONS = {
     entry: path.resolve(__dirname, 'fixtures', 'input.js'),
     output: {
       path: path.resolve(__dirname, 'fixtures'),
-      filename: 'output.js',
-    },
+      filename: 'output.js'
+    }
   },
   dev: {
     publicPath: '/',
-    logLevel: 'silent',
+    logLevel: 'silent'
   },
   hot: {
-    logLevel: 'silent',
-  },
+    logLevel: 'silent'
+  }
 };
 
 function buildOptions(opts) {
   const options = merge({}, DEFAULT_OPTIONS, opts);
   return merge(options, {
     config: null,
-    compiler: Webpack(options.config),
+    compiler: Webpack(options.config)
   });
 }
 
@@ -81,7 +82,7 @@ describe('devMiddleware', () => {
         webpack,
         async (ctx) => {
           ctx.body = 'foo'; // eslint-disable-line
-        },
+        }
       ]);
 
     const { middleware, req, server } = setup({}, mware);
