@@ -1,49 +1,45 @@
 {
   "name": "koa-webpack",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Development and Hot Reload Middleware for Koa2",
-  "main": "dist/index.js",
-  "scripts": {
-    "bdd": "mocha --compilers=js:babel-register --exit",
-    "build": "babel index.js --out-dir dist",
-    "lint": "eslint index.js test/*.js",
-    "test": "npm run lint && npm run bdd"
-  },
+  "license": "MPL",
+  "repository": "shellscape/koa-webpack",
+  "author": "Andrew Powell <andrew@shellscape.org>",
+  "main": "index.js",
   "engines": {
     "node": ">= 6.0.0"
   },
-  "repository": "shellscape/koa-webpack",
-  "author": {
-    "name": "Andrew Powell",
-    "email": "andrew@shellscape.org",
-    "url": "shellscape.org"
+  "scripts": {
+    "ci": "npm run lint && npm run test",
+    "mocha": "mocha test/test.js --exit",
+    "lint": "eslint index.js test/*.js",
+    "test": "npm run mocha"
   },
-  "license": "MPL",
+  "peerDependencies": {
+    "webpack": "^2.2.0 || ^3.0.0 || ^4.0.0-alpha.2"
+  },
   "dependencies": {
     "app-root-path": "^2.0.1",
-    "koa-compose": "^4.0.0",
     "merge-options": "^1.0.0",
-    "webpack": "^3.4.1",
     "webpack-dev-middleware": "^2.0.3",
-    "webpack-hot-middleware": "^2.13.0"
+    "webpack-hot-client": "0.0.3",
+    "webpack-log": "^1.1.1"
   },
   "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-cli": "^6.24.1",
-    "babel-eslint": "^8.1.2",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-async-to-generator": "^6.16.0",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-es2015": "^6.16.0",
-    "babel-preset-stage-2": "^6.17.0",
-    "babel-register": "^6.16.3",
+    "babel-core": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0",
     "deepmerge": "^2.0.1",
     "eslint": "^4.1.0",
-    "eslint-config-shellscape": "^1.0.0",
+    "eslint-config-webpack": "^1.2.5",
+    "eslint-plugin-import": "^2.8.0",
+    "killable": "^1.0.0",
     "koa": "^2.2.0",
+    "koa-compose": "^4.0.0",
     "mocha": "^4.1.0",
     "server-destroy": "^1.0.1",
     "supertest": "^3.0.0",
+    "webpack": "^3.10.0",
     "wtfnode": "^0.5.6"
   }
 }

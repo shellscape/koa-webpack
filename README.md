@@ -2,6 +2,15 @@
 
 Development and Hot Module Reload Middleware for **Koa2**, in a single middleware module.
 
+## Version 2 Breaking Changes
+
+As of version 2.0.0, Node v4 is no longer supported. The minimum version of Node
+supported is v6.11. Browser support is limited to those browsers which support
+_native_ `WebSocket`. That typically means the last two major versions of a
+browser. If you need support for older browsers, please use version 1.x of this
+module. If you would like to submit a fix for a 1.x version of the module, please
+submit that to the `1.x` branch.
+
 ## &nbsp;
 <p align="center">
   <b>:rocket: &nbsp; Are you ready to tackle ES6 and hone your JavaScript Skills?</b> &nbsp; :rocket:<br/>
@@ -152,9 +161,9 @@ import middleware from 'koa-webpack';
 ## Using with koa-compress
 
 When using `koa-webpack` with [koa-compress](https://github.com/koajs/compress),
-you may experience issues with saving files and hot module reload. Please review 
+you may experience issues with saving files and hot module reload. Please review
 [this issue](https://github.com/shellscape/koa-webpack/issues/36#issuecomment-289565573)
-for more information and a workaround. 
+for more information and a workaround.
 
 ## Server-Side-Rendering
 
