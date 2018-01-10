@@ -21,6 +21,8 @@ browser. If you need support for older browsers, please use version 1.x of this
 module. If you would like to submit a fix for a 1.x version of the module, please
 submit that to the `1.x` branch.
 
+After upgrading `koa-webpack` to 2.x from 1.x, you will need to remove `webpack-hot-middleware/client` from entry and remove `webpack.HotModuleReplacementPlugin` from plugins in webpack configuration.
+
 ## Getting Started
 
 First thing's first, install the module:
