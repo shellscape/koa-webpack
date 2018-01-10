@@ -21,6 +21,12 @@ browser. If you need support for older browsers, please use version 1.x of this
 module. If you would like to submit a fix for a 1.x version of the module, please
 submit that to the `1.x` branch.
 
+### Migrating to Version 2.x
+
+Version 1.x leveraged webpack-hot-middleware, which required the user to add an entry to the config for `webpack-hot-middleware/client`, and also add `webpack.HotModuleReplacementPlugin` to plugins. These are no longer needed, and will cause errors if not removed from the webpack config. 
+
+If you have setup `hot` options for `koa-webpack` in your config or code, you'll need to reference the [`webpack-hot-client` options](https://github.com/webpack-contrib/webpack-hot-client#options) and update those accordingly. The options for `webpack-hot-middleware` are _not_ 1:1 with `webpack-hot-client`
+
 ## Getting Started
 
 First thing's first, install the module:
