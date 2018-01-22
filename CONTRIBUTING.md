@@ -3,31 +3,14 @@
 
 ## What We Use
 
-- Tooling: [Gulp](http://gulpjs.com/)
+- Testing: [Mocha](https://mochajs.org/)
 - Linting: [ESLint](http://eslint.org/)
 - ES6 Transpiling: [Babel](http://babeljs.io/)
 - Building: [Webpack](https://webpack.github.io/)
 
-## Getting Started
-
-You'll need Gulp installed globally to run our tooling suite.
-
-```bash
-npm install gulp -g
-```
-
 ## Pull Requests
 
-Please don't commit any files in `/dist` in your Pull Request.
-Feel completely free to build them on your machine, but please
-exclude them in PRs.
-
-Please lint your changes before submitting a Pull Request. The
-default Gulp task is the linting task, and can be executed like so:
-
-```bash
-gulp
-```
+Please don't commit `package-lock.json`.
 
 Please don't change variable or parameter names to match your
 personal prefrences, unless the change is part of a refactor
