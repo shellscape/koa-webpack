@@ -23,7 +23,7 @@ submit that to the `1.x` branch.
 
 ### Migrating to Version 2.x
 
-Version 1.x leveraged webpack-hot-middleware, which required the user to add an entry to the config for `webpack-hot-middleware/client`, and also add `webpack.HotModuleReplacementPlugin` to plugins. These are no longer needed, and will cause errors if not removed from the webpack config. 
+Version 1.x leveraged webpack-hot-middleware, which required the user to add an entry to the config for `webpack-hot-middleware/client`, and also add `webpack.HotModuleReplacementPlugin` to plugins. These are no longer needed, and will cause errors if not removed from the webpack config.
 
 If you have setup `hot` options for `koa-webpack` in your config or code, you'll need to reference the [`webpack-hot-client` options](https://github.com/webpack-contrib/webpack-hot-client#options) and update those accordingly. The options for `webpack-hot-middleware` are _not_ 1:1 with `webpack-hot-client`
 
@@ -59,9 +59,9 @@ app.use(middleware({
 Returns an `Object` containing:
 
 - `close(callback)` *(Function)* - Closes both the instance of `webpack-dev-middleware`
-and `webpack-dev-client`. Accepts a single `Function` callback parameter that is
+and `webpack-hot-client`. Accepts a single `Function` callback parameter that is
 executed when complete.
-- `client` *(Object)* - An instance of `webpack-dev-client`.
+- `client` *(Object)* - An instance of `webpack-hot-client`.
 - `dev` *(Object)* - An instance of `webpack-dev-middleware`
 
 ## options
@@ -151,15 +151,13 @@ app.use(async (ctx, next) => {
 
 For more details please refer to: [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware#server-side-rendering)
 
-## Building
+## Lint and test
 
 ```bash
 npm install
-npm install gulp -g
-gulp build
+npm run lint
+npm test
 ```
-
-The `dist` directory will contain the `index.js` file that the module uses as the entry point.
 
 ## Contributing
 
