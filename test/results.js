@@ -12,7 +12,7 @@ const koaWebpack = require('../index');
 
 const DEFAULT_OPTIONS = {
   config: {
-    entry: path.resolve(__dirname, 'fixtures', 'input.js'),
+    entry: [path.resolve(__dirname, 'fixtures', 'input.js')],
     output: {
       path: path.resolve(__dirname, 'fixtures'),
       filename: 'output.js'
