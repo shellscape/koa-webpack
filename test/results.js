@@ -11,6 +11,7 @@ const Webpack = require('webpack');
 const koaWebpack = require('../index');
 
 const DEFAULT_OPTIONS = {
+  mode: 'development',
   config: {
     entry: [path.resolve(__dirname, 'fixtures', 'input.js')],
     output: {
@@ -49,7 +50,7 @@ function setup(options, setupMiddleware = defaultApp) {
   return { middleware, req, server };
 }
 
-describe('devMiddleware', () => {
+describe('koa-webpack', () => {
   it('should provide access to middleware and client', (done) => {
     const { middleware, server, req } = setup({ dev: { lazy: false } });
 
@@ -61,7 +62,7 @@ describe('devMiddleware', () => {
         server.kill();
         middleware.close(done);
       });
-  });
+  }).timeout(5e3);
 
   it('sends the result in watch mode', (done) => {
     const { middleware, req, server } = setup({ dev: { lazy: false } });
@@ -74,7 +75,7 @@ describe('devMiddleware', () => {
         server.kill();
         middleware.close(done);
       });
-  });
+  }).timeout(5e3);
 
   it('builds and sends the result in lazy mode', (done) => {
     const { middleware, req, server } = setup({ dev: { lazy: true } });
@@ -87,7 +88,7 @@ describe('devMiddleware', () => {
         server.kill();
         middleware.close(done);
       });
-  });
+  }).timeout(5e3);
 
   it('continues on if the file is not part of webpack', (done) => {
     const mware = webpack =>
@@ -105,5 +106,5 @@ describe('devMiddleware', () => {
         server.kill();
         middleware.close(done);
       });
-  });
+  }).timeout(5e3);
 });
