@@ -11,6 +11,7 @@ const Webpack = require('webpack');
 const koaWebpack = require('../index');
 
 const DEFAULT_OPTIONS = {
+  mode: 'development',
   config: {
     entry: [path.resolve(__dirname, 'fixtures', 'input.js')],
     output: {
@@ -49,7 +50,7 @@ function setup(options, setupMiddleware = defaultApp) {
   return { middleware, req, server };
 }
 
-describe('devMiddleware', () => {
+describe('koa-webpack', () => {
   it('should provide access to middleware and client', (done) => {
     const { middleware, server, req } = setup({ dev: { lazy: false } });
 
