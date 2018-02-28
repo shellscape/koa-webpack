@@ -32,7 +32,7 @@ function koaDevware(dev, compiler) {
         resolve(true);
       });
 
-      compiler.plugin('failed', (error) => {
+      compiler.hooks.failed.tap('KoaWebpack', (error) => {
         reject(error);
       });
     });
