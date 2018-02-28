@@ -62,7 +62,7 @@ describe('koa-webpack', () => {
         server.kill();
         middleware.close(done);
       });
-  });
+  }).timeout(5e3);
 
   it('sends the result in watch mode', (done) => {
     const { middleware, req, server } = setup({ dev: { lazy: false } });
@@ -75,7 +75,7 @@ describe('koa-webpack', () => {
         server.kill();
         middleware.close(done);
       });
-  });
+  }).timeout(5e3);
 
   it('builds and sends the result in lazy mode', (done) => {
     const { middleware, req, server } = setup({ dev: { lazy: true } });
@@ -88,7 +88,7 @@ describe('koa-webpack', () => {
         server.kill();
         middleware.close(done);
       });
-  });
+  }).timeout(5e3);
 
   it('continues on if the file is not part of webpack', (done) => {
     const mware = webpack =>
@@ -106,5 +106,5 @@ describe('koa-webpack', () => {
         server.kill();
         middleware.close(done);
       });
-  });
+  }).timeout(5e3);
 });
