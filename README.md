@@ -123,13 +123,16 @@ options.
 
 #### hot
 
-Type: `Object`  
+Type: `Object|Boolean`  
 `optional`
 
 The `hot` property should contain options for `webpack-hot-client`, a list of
 which is available at [webpack-hot-client](https://github.com/webpack-contrib/webpack-hot-client).
 Omitting this property will result in `webpack-hot-client` using its default
 options.
+
+As of `v3.0.1` setting this to `false` will completely disable `webpack-hot-client`
+and all automatic Hot Module Replacement functionality.
 
 ## Using with koa-compress
 

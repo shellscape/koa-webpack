@@ -1,6 +1,7 @@
 'use strict';
 
 /* eslint global-require: off */
+require('loud-rejection/register');
 
 if (parseInt(process.version.substring(1), 10) < 8) {
   require('@babel/polyfill');

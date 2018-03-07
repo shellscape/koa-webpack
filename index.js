@@ -71,16 +71,15 @@ module.exports = function fn(opts) {
     options.dev.publicPath = publicPath;
   }
 
-  const client = hotClient(compiler, options.hot);
+  const client = options.hot ? hotClient(compiler, options.hot) : null;
   const dev = devMiddleware(compiler, options.dev);
 
   return Object.assign(koaDevware(dev, compiler), {
     dev,
     client,
     close(callback) {
-      dev.close(() => {
-        client.close(callback);
-      });
+      const next = client ? () => { client.close(callback); } : callback;
+      dev.close(next);
     }
   });
 };
