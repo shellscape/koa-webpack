@@ -64,6 +64,19 @@ describe('koa-webpack', () => {
       });
   }).timeout(5e3);
 
+  it('should disable hot-client', (done) => {
+    const { middleware, server, req } = setup({ dev: { lazy: false }, hot: false });
+
+    req.get('/output.js')
+      .then(() => {
+        assert(middleware.dev);
+        assert.equal(middleware.client, null);
+
+        server.kill();
+        middleware.close(done);
+      });
+  }).timeout(5e3);
+
   it('sends the result in watch mode', (done) => {
     const { middleware, req, server } = setup({ dev: { lazy: false } });
     req.get('/output.js')
