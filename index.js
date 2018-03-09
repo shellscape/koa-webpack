@@ -32,9 +32,19 @@ function koaDevware(dev, compiler) {
         resolve(true);
       });
 
-      compiler.hooks.failed.tap('KoaWebpack', (error) => {
-        reject(error);
-      });
+      function tapFailedHook(comp) {
+        comp.hooks.failed.tap('KoaWebpack', (error) => {
+          reject(error);
+        });
+      }
+
+      if (compiler.compilers) {
+        for (const child of compiler.compilers) {
+          tapFailedHook(child);
+        }
+      } else {
+        tapFailedHook(compiler);
+      }
     });
   }
 
