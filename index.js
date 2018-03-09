@@ -21,9 +21,17 @@ function koaDevware(dev, compiler) {
         resolve(true);
       });
 
-      compiler.hooks.failed.tap('KoaWebpack', (error) => {
-        reject(error);
-      });
+      const addCompilerHooks = (c) => {
+        c.hooks.failed.tap('KoaWebpack', (error) => {
+          reject(error);
+        });
+      };
+
+      if (compiler.compilers) {
+        compiler.compilers.forEach(addCompilerHooks);
+      } else {
+        addCompilerHooks(compiler);
+      }
     });
   }
 
