@@ -25,7 +25,7 @@ function koaDevware(dev, compiler) {
         comp.hooks.failed.tap('KoaWebpack', (error) => {
           reject(error);
         });
-      };
+      }
 
       if (compiler.compilers) {
         for (const child of compiler.compilers) {
