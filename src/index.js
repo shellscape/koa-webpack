@@ -10,33 +10,6 @@ const schema = require('../schemas/options.json');
 
 const defaults = { devMiddleware: {}, hotClient: {} };
 
-const getDevMiddleware = (options) => {
-  /* eslint-disable import/no-dynamic-require, global-require, no-param-reassign */
-  const { compiler, config } = options;
-
-  if (!compiler) {
-    if (!config) {
-      options.config = require(join(root.path, 'webpack.config.js'));
-    }
-
-    options.compiler = webpack(config);
-  }
-
-  if (!options.devMiddleware.publicPath) {
-    const { publicPath } = compiler.options.output;
-
-    if (!publicPath) {
-      throw new Error(
-        "koa-webpack: publicPath must be set on `dev` options, or in a compiler's `output` configuration."
-      );
-    }
-
-    options.devMiddleware.publicPath = publicPath;
-  }
-
-  return devMiddleware(options.compiler, options.devMiddleware);
-};
-
 const getClient = (compiler, options) => {
   if (!options.hotClient) {
     return Promise.resolve(null);
@@ -72,6 +45,7 @@ const getMiddleware = (devWare, options) => async (context, next) => {
       context.req,
       {
         end: (content) => {
+          // eslint-disable-next-line no-param-reassign
           context.body = content;
           resolve();
         },
@@ -88,8 +62,31 @@ module.exports = async (opts) => {
 
   validate({ name: 'koa-webpack', schema, target: options });
 
-  const devWare = getDevMiddleware(options);
-  const client = await getClient(options.compiler, options);
+  let { compiler, config } = options;
+
+  if (!compiler) {
+    if (!config) {
+      // eslint-disable-next-line import/no-dynamic-require, global-require
+      config = require(join(root.path, 'webpack.config.js'));
+    }
+
+    compiler = webpack(config);
+  }
+
+  if (!options.devMiddleware.publicPath) {
+    const { publicPath } = compiler.options.output;
+
+    if (!publicPath) {
+      throw new Error(
+        "koa-webpack: publicPath must be set on `dev` options, or in a compiler's `output` configuration."
+      );
+    }
+
+    options.devMiddleware.publicPath = publicPath;
+  }
+
+  const client = await getClient(compiler, options);
+  const devWare = devMiddleware(compiler, options.devMiddleware);
   const middleware = getMiddleware(devWare, options);
   const close = (callback) => {
     const next = client ? () => client.close(callback) : callback;
