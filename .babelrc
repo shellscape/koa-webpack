@@ -16,7 +16,6 @@
   ],
   "plugins": [
     [
-      "fast-async",
       "transform-object-rest-spread",
       {
         "useBuiltIns": true
