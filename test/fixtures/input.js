@@ -1,3 +1,1 @@
-'use strict';
-
-console.log('Hello world'); // eslint-disable-line
+console.log('Hello World'); // eslint-disable-line

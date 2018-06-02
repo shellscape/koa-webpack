@@ -1,3 +1,16 @@
 node_modules
 .DS_Store
 *.log
+logs
+npm-debug.log*
+.eslintcache
+/coverage
+/dist
+/local
+/reports
+/node_modules
+Thumbs.db
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
