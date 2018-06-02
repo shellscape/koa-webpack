@@ -106,11 +106,13 @@ this option.
 Example:
 
 ```js
-import config from './webpack.config.js';
+const config = require('./webpack.config.js');
+const koaWebpack = require('koa-webpack');
 
-app.use(middleware({
-  config: config
-}))
+koaWebpack({ config })
+ .then((middleware) => {
+  app.use(middleware);
+});
 ```
 
 ### devMiddleware
