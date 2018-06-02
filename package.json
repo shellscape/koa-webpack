@@ -31,6 +31,7 @@
   },
   "files": [
     "lib/",
+    "schemas/",
     "LICENSE",
     "README.md"
   ],
