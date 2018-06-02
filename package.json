@@ -1,6 +1,6 @@
 {
   "name": "koa-webpack",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Development and Hot Reload Middleware for Koa2",
   "license": "MPL",
   "repository": "shellscape/koa-webpack",
