@@ -16,7 +16,7 @@
   ],
   "plugins": [
     [
-      "async-to-promises",
+      "fast-async",
       "transform-object-rest-spread",
       {
         "useBuiltIns": true

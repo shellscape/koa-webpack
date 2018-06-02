@@ -44,8 +44,6 @@ async function setup(opts, setupMiddleware = defaultApp) {
   const options = buildOptions(opts);
   const middleware = await koaWebpack(options);
 
-  // console.log(middleware);
-
   app.use(setupMiddleware(middleware));
 
   const server = app.listen();
