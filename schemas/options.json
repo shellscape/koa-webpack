@@ -1,0 +1,22 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "devMiddleware": {
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "compiler": {
+      "additionalProperties": true,
+      "type": ["object", "null"]
+    },
+    "config": {
+      "additionalProperties": true,
+      "type": ["object", "null"]
+    },
+    "hotClient": {
+      "additionalProperties": true,
+      "type": ["object", "null", "boolean"]
+    }
+  },
+  "type": "object"
+}

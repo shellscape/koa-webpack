@@ -1,23 +1,6 @@
-<div align="center">
-  <a href="https://koajs.com">
-    <img width="200" src="https://i.imgur.com/IABvnrD.png"/>
-  </a>
-  <a href="https://github.com/webpack/webpack">
-    <img width="200" height="200" src="https://webpack.js.org/assets/icon-square-big.svg"/>
-  </a>
-</div>
+# koa-webpack [![Build Status](https://travis-ci.org/shellscape/koa-webpack.svg?branch=master)](https://travis-ci.org/shellscape/koa-webpack)
 
-[![npm][npm]][npm-url]
-[![node][node]][node-url]
-[![deps][deps]][deps-url]
-[![tests][tests]][tests-url]
-[![chat][chat]][chat-url]
-[![size][size]][size-url]
-
-# koa-webpack
-
-Development and Hot Module Reload Middleware for **Koa2**, in a single
-middleware module.
+Development and Hot Module Reload Middleware for **Koa2**, in a single middleware module.
 
 This module wraps and composes
 [`webpack-dev-middleware`](https://github.com/webpack/webpack-dev-middleware) and
@@ -29,23 +12,38 @@ and the `webpack.config.js` file in the root of your project, automagically, sho
 you choose to let it. This negates the need for all of the repetitive setup and
 config that you get with `koa-webpack-middleware`.
 
-## Requirements
+## Version 2 Breaking Changes
 
-This module requires a minimum of Node v6.9.0 and Webpack v4.0.0.
+As of version 2.0.0, Node v4 is no longer supported. The minimum version of Node
+supported is v6.11. Browser support is limited to those browsers which support
+_native_ `WebSocket`. That typically means the last two major versions of a
+browser. If you need support for older browsers, please use version 1.x of this
+module. If you would like to submit a fix for a 1.x version of the module, please
+submit that to the `1.x` branch.
+
+### Migrating to Version 2.x
+
+Version 1.x leveraged webpack-hot-middleware, which required the user to add an entry to the config for `webpack-hot-middleware/client`, and also add `webpack.HotModuleReplacementPlugin` to plugins. These are no longer needed, and will cause errors if not removed from the webpack config.
+
+If you have setup `hot` options for `koa-webpack` in your config or code, you'll need to reference the [`webpack-hot-client` options](https://github.com/webpack-contrib/webpack-hot-client#options) and update those accordingly. The options for `webpack-hot-middleware` are _not_ 1:1 with `webpack-hot-client`
 
 ## Getting Started
 
-To begin, you'll need to install `koa-webpack`:
+First thing's first, install the module:
 
-```console
-$ npm install koa-webpack --save-dev
+```bash
+npm install koa-webpack --save-dev
 ```
+
+If you happen to see warning from npm that reads:
+`UNMET PEER DEPENDENCY webpack@2.1.0-beta.25` fear not, simply install the latest
+beta version of `webpack`.
 
 Next, setup the module in your code. (We're assuming ES6 syntax here)
 
 ```js
-const Koa = require('koa');
-const middleware = require('koa-webpack');
+import Koa from 'koa';
+import middleware from 'koa-webpack';
 
 const app = new Koa();
 
@@ -66,13 +64,13 @@ executed when complete.
 - `client` *(Object)* - An instance of `webpack-hot-client`.
 - `dev` *(Object)* - An instance of `webpack-dev-middleware`
 
-## Options
+## options
 
 The middleware accepts an `options` Object, which can contain options for the
 `webpack-dev-middleware` and `webpack-hot-client` bundled with this module.
 The following is a property reference for the Object:
 
-### compiler
+#### compiler
 
 Type: `Object`  
 `optional`
@@ -94,7 +92,7 @@ app.use(middleware({
 }))
 ```
 
-### config
+#### config
 
 Type: `Object`  
 `optional`
@@ -113,7 +111,7 @@ app.use(middleware({
 }))
 ```
 
-### devMiddleware
+#### dev
 
 Type: `Object`  
 `optional`
@@ -123,7 +121,7 @@ which is available at [webpack-dev-middleware](https://github.com/webpack/webpac
 Omitting this property will result in `webpack-dev-middleware` using its default
 options.
 
-### hotClient
+#### hot
 
 Type: `Object|Boolean`  
 `optional`
@@ -145,8 +143,7 @@ for more information and a workaround.
 
 ## Server-Side-Rendering
 
-When `serverSideRender` is set to true in `config.dev`, `webpackStats` is
-accessible from `ctx.state.webpackStats`.
+When `serverSideRender` is set to true in `config.dev`, `webpackStats` is accessible from `ctx.state.webpackStats`.
 
 ```js
 app.use(async (ctx, next) => {
@@ -155,42 +152,20 @@ app.use(async (ctx, next) => {
 })
 ```
 
-For more details please refer to:
-[webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware#server-side-rendering)
+For more details please refer to: [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware#server-side-rendering)
 
+## Lint and test
+
+```bash
+npm install
+npm run lint
+npm test
+```
 
 ## Contributing
 
-Please take a moment to read our contributing guidelines if you haven't yet done so.
-
-#### [CONTRIBUTING](./.github/CONTRIBUTING.md)
+We welcome your contributions! Please have a read of [CONTRIBUTING](CONTRIBUTING.md).
 
 ## Attribution
 
-This module started as a fork of
-[`koa-webpack-middleware`](https://github.com/leecade/koa-webpack-middleware)
-
-## License
-
-#### [MIT](./LICENSE)
-
-[npm]: https://img.shields.io/npm/v/koa-webpack.svg
-[npm-url]: https://npmjs.com/package/koa-webpack
-
-[node]: https://img.shields.io/node/v/koa-webpack.svg
-[node-url]: https://nodejs.org
-
-[deps]: https://david-dm.org/shellscape/koa-webpack.svg
-[deps-url]: https://david-dm.org/shellscape/koa-webpack
-
-[tests]: 	https://img.shields.io/circleci/project/github/shellscape/koa-webpack.svg
-[tests-url]: https://circleci.com/gh/shellscape/koa-webpack
-
-[cover]: https://codecov.io/gh/shellscape/koa-webpack/branch/master/graph/badge.svg
-[cover-url]: https://codecov.io/gh/shellscape/koa-webpack
-
-[chat]: https://img.shields.io/badge/gitter-webpack%2Fwebpack-brightgreen.svg
-[chat-url]: https://gitter.im/webpack/webpack
-
-[size]: https://packagephobia.now.sh/badge?p=koa-webpack
-[size-url]: https://packagephobia.now.sh/result?p=koa-webpack
+This module started as a fork of [`koa-webpack-middleware`](https://github.com/leecade/koa-webpack-middleware)
