@@ -7,7 +7,7 @@ const compose = require('koa-compose');
 const request = require('supertest');
 const webpack = require('webpack');
 
-const koaWebpack = require('../src');
+const koaWebpack = require('../lib');
 
 const defaults = {
   config: {
