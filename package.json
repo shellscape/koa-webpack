@@ -43,7 +43,7 @@
     "loud-rejection": "^1.6.0",
     "merge-options": "^1.0.0",
     "webpack-dev-middleware": "^3.0.0",
-    "webpack-hot-client": "^3.0.0",
+    "webpack-hot-client": "^4.0.1",
     "webpack-log": "^1.1.1"
   },
   "devDependencies": {
