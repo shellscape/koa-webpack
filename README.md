@@ -49,9 +49,12 @@ const middleware = require('koa-webpack');
 
 const app = new Koa();
 
-app.use(middleware({
-  // options
-}))
+const koaWebpack = require('koa-webpack');
+
+koaWebpack({ .. options .. })
+ .then((middleware) => {
+  app.use(middleware);
+});
 ```
 
 ## API
@@ -84,14 +87,15 @@ this option.
 Example:
 
 ```js
-import Webpack from 'webpack';
-import config from './webpack.config.js';
-
+const webpack = require('webpack');
+const config = require('./webpack.config.js');
 const compiler = Webpack(config);
+const koaWebpack = require('koa-webpack');
 
-app.use(middleware({
-  compiler: compiler
-}))
+koaWebpack({ compiler })
+ .then((middleware) => {
+  app.use(middleware);
+});
 ```
 
 ### config
