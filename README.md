@@ -44,14 +44,16 @@ $ npm install koa-webpack --save-dev
 Next, setup the module in your code. (We're assuming ES6 syntax here)
 
 ```js
-const Koa = require('koa');
-const middleware = require('koa-webpack');
+import Koa from 'koa';
+import koaWebpack from 'koa-webpack';
 
 const app = new Koa();
 
-app.use(middleware({
+koaWebpack({
   // options
-}))
+}).then(middleware => {
+  app.use(middleware)
+})
 ```
 
 ## API
@@ -84,14 +86,16 @@ this option.
 Example:
 
 ```js
+import koaWebpack from 'koa-webpack'
 import Webpack from 'webpack';
 import config from './webpack.config.js';
 
 const compiler = Webpack(config);
 
-app.use(middleware({
-  compiler: compiler
-}))
+koaWebpack({ compiler })
+  .then(middleware => {
+    app.use(middleware)
+});
 ```
 
 ### config
@@ -106,12 +110,12 @@ this option.
 Example:
 
 ```js
-const config = require('./webpack.config.js');
-const koaWebpack = require('koa-webpack');
+import koaWebpack from 'koa-webpack'
+import config from './webpack.config.js';
 
 koaWebpack({ config })
- .then((middleware) => {
-  app.use(middleware);
+  .then(middleware => {
+    app.use(middleware)
 });
 ```
 
