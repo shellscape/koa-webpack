@@ -45,7 +45,6 @@ Next, setup the module in your code. (We're assuming ES6 syntax here)
 
 ```js
 const Koa = require('koa');
-const middleware = require('koa-webpack');
 
 const app = new Koa();
 
@@ -124,7 +123,7 @@ koaWebpack({ config })
 Type: `Object`  
 `optional`
 
-The `dev` property should contain options for `webpack-dev-middleware`, a list of
+The `devMiddleware` property should contain options for `webpack-dev-middleware`, a list of
 which is available at [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware).
 Omitting this property will result in `webpack-dev-middleware` using its default
 options.
@@ -134,7 +133,7 @@ options.
 Type: `Object|Boolean`  
 `optional`
 
-The `hot` property should contain options for `webpack-hot-client`, a list of
+The `hotClient` property should contain options for `webpack-hot-client`, a list of
 which is available at [webpack-hot-client](https://github.com/webpack-contrib/webpack-hot-client).
 Omitting this property will result in `webpack-hot-client` using its default
 options.
