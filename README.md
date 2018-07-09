@@ -60,13 +60,15 @@ koaWebpack({ .. options .. })
 
 ### koaWebpack([options])
 
-Returns an `Object` containing:
+Returns a `Promise` which resolves to middleware
+
+Also, middleware object contains:
 
 - `close(callback)` *(Function)* - Closes both the instance of `webpack-dev-middleware`
 and `webpack-hot-client`. Accepts a single `Function` callback parameter that is
 executed when complete.
 - `client` *(Object)* - An instance of `webpack-hot-client`.
-- `dev` *(Object)* - An instance of `webpack-dev-middleware`
+- `devMiddleware` *(Object)* - An instance of `webpack-dev-middleware`
 
 ## Options
 
@@ -163,6 +165,24 @@ app.use(async (ctx, next) => {
 For more details please refer to:
 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware#server-side-rendering)
 
+
+## Using with html-webpack-plugin
+
+When using with html-webpack-plugin, you can access dev-middleware in-memory filesystem to serve index.html file:
+
+```js
+koaWebpack({
+  config: webpackConfig
+}).then(middleware => {
+  app.use(middleware)
+
+  app.use(async ctx => {
+    const filename = path.resolve(webpackConfig.output.path, 'index.html')
+    ctx.response.type = 'html'
+    ctx.response.body = middleware.devMiddleware.fileSystem.createReadStream(filename)
+  })
+})
+```
 
 ## Contributing
 
