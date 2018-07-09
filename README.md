@@ -60,14 +60,13 @@ koaWebpack({ .. options .. })
 
 ### koaWebpack([options])
 
-Returns a `Promise` which resolves to middleware
-
-Also, middleware object contains:
+Returns a `Promise` which resolves the server `middleware` containing the
+following additional properties:
 
 - `close(callback)` *(Function)* - Closes both the instance of `webpack-dev-middleware`
 and `webpack-hot-client`. Accepts a single `Function` callback parameter that is
 executed when complete.
-- `client` *(Object)* - An instance of `webpack-hot-client`.
+- `hotClient` *(Object)* - An instance of `webpack-hot-client`.
 - `devMiddleware` *(Object)* - An instance of `webpack-dev-middleware`
 
 ## Options
