@@ -1,8 +1,8 @@
 {
   "name": "koa-webpack",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "Development and Hot Reload Middleware for Koa2",
-  "license": "MPL",
+  "license": "MIT",
   "repository": "shellscape/koa-webpack",
   "author": "Andrew Powell <andrew@shellscape.org>",
   "homepage": "https://github.com/shellscape/koa-webpack",
@@ -44,7 +44,7 @@
     "loud-rejection": "^1.6.0",
     "merge-options": "^1.0.0",
     "webpack-dev-middleware": "^3.0.0",
-    "webpack-hot-client": "^4.0.1",
+    "webpack-hot-client": "^4.1.0",
     "webpack-log": "^1.1.1"
   },
   "devDependencies": {
