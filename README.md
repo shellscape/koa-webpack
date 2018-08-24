@@ -142,13 +142,6 @@ options.
 As of `v3.0.1` setting this to `false` will completely disable `webpack-hot-client`
 and all automatic Hot Module Replacement functionality.
 
-## Using with koa-compress
-
-When using `koa-webpack` with [koa-compress](https://github.com/koajs/compress),
-you may experience issues with saving files and hot module reload. Please review
-[this issue](https://github.com/shellscape/koa-webpack/issues/36#issuecomment-289565573)
-for more information and a workaround.
-
 ## Server-Side-Rendering
 
 When `serverSideRender` is set to true in `config.dev`, `webpackStats` is
