@@ -151,7 +151,7 @@ for more information and a workaround.
 
 ## Server-Side-Rendering
 
-When `serverSideRender` is set to true in `config.dev`, `webpackStats` is
+When `serverSideRender` is set to true in `config.devMiddleware`, `webpackStats` is
 accessible from `ctx.state.webpackStats`.
 
 ```js
