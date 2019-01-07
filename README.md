@@ -1,27 +1,24 @@
-<div align="center">
-  <a href="https://koajs.com">
-    <img width="200" src="https://i.imgur.com/IABvnrD.png"/>
-  </a>
-  <a href="https://github.com/webpack/webpack">
-    <img width="200" height="200" src="https://webpack.js.org/assets/icon-square-big.svg"/>
-  </a>
-</div>
+[tests]: 	https://img.shields.io/circleci/project/github/shellscape/webpack-plugin-serve.svg
+[tests-url]: https://circleci.com/gh/shellscape/webpack-plugin-serve
 
-[![npm][npm]][npm-url]
-[![node][node]][node-url]
-[![deps][deps]][deps-url]
-[![tests][tests]][tests-url]
-[![chat][chat]][chat-url]
-[![size][size]][size-url]
+[cover]: https://codecov.io/gh/shellscape/webpack-plugin-serve/branch/master/graph/badge.svg
+[cover-url]: https://codecov.io/gh/shellscape/webpack-plugin-serve
+
+[size]: https://packagephobia.now.sh/badge?p=webpack-plugin-serve
+[size-url]: https://packagephobia.now.sh/result?p=webpack-plugin-serve
 
 # koa-webpack
+
+[![tests][tests]][tests-url]
+[![cover][cover]][cover-url]
+[![size][size]][size-url]
 
 Development and Hot Module Reload Middleware for **Koa2**, in a single
 middleware module.
 
 This module wraps and composes
 [`webpack-dev-middleware`](https://github.com/webpack/webpack-dev-middleware) and
-[`webpack-hot-client`](https://github.com/webpack-contrib/webpack-hot-client)
+[`webpack-hot-client`](https://github.com/shellscape/webpack-hot-client)
 into a single middleware module, allowing for quick and concise implementation.
 
 As an added bonus, it'll also use the installed `webpack` module from your project,
@@ -45,15 +42,13 @@ Next, setup the module in your code. (We're assuming ES6 syntax here)
 
 ```js
 const Koa = require('koa');
-
-const app = new Koa();
-
 const koaWebpack = require('koa-webpack');
 
-koaWebpack({ .. options .. })
- .then((middleware) => {
-  app.use(middleware);
-});
+const app = new Koa();
+const options = { .. };
+const middleware = await koaWebpack(options);
+
+app.use(middleware);
 ```
 
 ## API
@@ -89,19 +84,17 @@ Example:
 ```js
 const webpack = require('webpack');
 const config = require('./webpack.config.js');
-const compiler = Webpack(config);
 const koaWebpack = require('koa-webpack');
 
-koaWebpack({ compiler })
- .then((middleware) => {
-  app.use(middleware);
-});
+const compiler = Webpack(config);
+const middleware = await koaWebpack({ compiler });
+
+app.use(middleware);
 ```
 
 ### config
 
-Type: `Object`  
-`optional`
+Type: `Object`
 
 Should you rather that the middleware use an instance of webpack configuration
 that you've already required/imported, you can pass it to the middleware using
@@ -110,19 +103,17 @@ this option.
 Example:
 
 ```js
-const config = require('./webpack.config.js');
 const koaWebpack = require('koa-webpack');
+const config = require('./webpack.config.js');
 
-koaWebpack({ config })
- .then((middleware) => {
-  app.use(middleware);
-});
+const middleware = await koaWebpack({ config });
+
+app.use(middleware);
 ```
 
 ### devMiddleware
 
-Type: `Object`  
-`optional`
+Type: `Object`
 
 The `devMiddleware` property should contain options for `webpack-dev-middleware`, a list of
 which is available at [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware).
@@ -131,8 +122,7 @@ options.
 
 ### hotClient
 
-Type: `Object|Boolean`  
-`optional`
+Type: `Object|Boolean`
 
 The `hotClient` property should contain options for `webpack-hot-client`, a list of
 which is available at [webpack-hot-client](https://github.com/webpack-contrib/webpack-hot-client).
@@ -170,17 +160,15 @@ For more details please refer to:
 When using with html-webpack-plugin, you can access dev-middleware in-memory filesystem to serve index.html file:
 
 ```js
-koaWebpack({
-  config: webpackConfig
-}).then(middleware => {
-  app.use(middleware)
+const middleware = koaWebpack({ config });
 
-  app.use(async ctx => {
-    const filename = path.resolve(webpackConfig.output.path, 'index.html')
-    ctx.response.type = 'html'
-    ctx.response.body = middleware.devMiddleware.fileSystem.createReadStream(filename)
-  })
-})
+app.use(middleware);
+
+app.use(async (ctx) => {
+  const filename = path.resolve(webpackConfig.output.path, 'index.html')
+  ctx.response.type = 'html'
+  ctx.response.body = middleware.devMiddleware.fileSystem.createReadStream(filename)
+});
 ```
 
 ## Contributing
@@ -197,24 +185,3 @@ This module started as a fork of
 ## License
 
 #### [MPL](./LICENSE)
-
-[npm]: https://img.shields.io/npm/v/koa-webpack.svg
-[npm-url]: https://npmjs.com/package/koa-webpack
-
-[node]: https://img.shields.io/node/v/koa-webpack.svg
-[node-url]: https://nodejs.org
-
-[deps]: https://david-dm.org/shellscape/koa-webpack.svg
-[deps-url]: https://david-dm.org/shellscape/koa-webpack
-
-[tests]: 	https://img.shields.io/circleci/project/github/shellscape/koa-webpack.svg
-[tests-url]: https://circleci.com/gh/shellscape/koa-webpack
-
-[cover]: https://codecov.io/gh/shellscape/koa-webpack/branch/master/graph/badge.svg
-[cover-url]: https://codecov.io/gh/shellscape/koa-webpack
-
-[chat]: https://img.shields.io/badge/gitter-webpack%2Fwebpack-brightgreen.svg
-[chat-url]: https://gitter.im/webpack/webpack
-
-[size]: https://packagephobia.now.sh/badge?p=koa-webpack
-[size-url]: https://packagephobia.now.sh/result?p=koa-webpack

@@ -1,10 +1,8 @@
 {
-  "extends": "webpack",
-  "parserOptions": {
-    "sourceType": "script"
-  },
-  "rules": {
-    "comma-dangle": ["error", "never"],
-    "strict": ["error", "safe"]
+  "extends": "shellscape",
+  "globals": {
+    "document": true,
+    "WebSocket": true,
+    "window": true
   }
 }
