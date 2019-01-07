@@ -26,19 +26,23 @@ and the `webpack.config.js` file in the root of your project, automagically, sho
 you choose to let it. This negates the need for all of the repetitive setup and
 config that you get with `koa-webpack-middleware`.
 
-## Requirements
+## Install
 
-This module requires a minimum of Node v6.9.0 and Webpack v4.0.0.
-
-## Getting Started
-
-To begin, you'll need to install `koa-webpack`:
+Using npm:
 
 ```console
-$ npm install koa-webpack --save-dev
+npm install koa-webpack --save-dev
 ```
 
-Next, setup the module in your code. (We're assuming ES6 syntax here)
+<a href="https://www.patreon.com/shellscape">
+  <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+</a>
+
+## Requirements
+
+`koa-webpack` is an evergreen module. 🌲 This module requires an [Active LTS](https://github.com/nodejs/Release) Node version (v8.0.0+ or v10.0.0+), and Webpack v4.0.0+.
+
+## Usage
 
 ```js
 const Koa = require('koa');
