@@ -50,7 +50,7 @@ const app = new Koa();
 
 const koaWebpack = require('koa-webpack');
 
-koaWebpack({ .. options .. })
+await koaWebpack({ .. options .. })
  .then((middleware) => {
   app.use(middleware);
 });
@@ -92,7 +92,7 @@ const config = require('./webpack.config.js');
 const compiler = Webpack(config);
 const koaWebpack = require('koa-webpack');
 
-koaWebpack({ compiler })
+await koaWebpack({ compiler })
  .then((middleware) => {
   app.use(middleware);
 });
@@ -113,7 +113,7 @@ Example:
 const config = require('./webpack.config.js');
 const koaWebpack = require('koa-webpack');
 
-koaWebpack({ config })
+await koaWebpack({ config })
  .then((middleware) => {
   app.use(middleware);
 });
@@ -170,7 +170,7 @@ For more details please refer to:
 When using with html-webpack-plugin, you can access dev-middleware in-memory filesystem to serve index.html file:
 
 ```js
-koaWebpack({
+await koaWebpack({
   config: webpackConfig
 }).then(middleware => {
   app.use(middleware)
