@@ -164,7 +164,7 @@ For more details please refer to:
 When using with html-webpack-plugin, you can access dev-middleware in-memory filesystem to serve index.html file:
 
 ```js
-const middleware = koaWebpack({ config });
+const middleware = await koaWebpack({ config });
 
 app.use(middleware);
 
