@@ -1,11 +1,11 @@
-[tests]: 	https://img.shields.io/circleci/project/github/shellscape/webpack-plugin-serve.svg
-[tests-url]: https://circleci.com/gh/shellscape/webpack-plugin-serve
+[tests]: 	https://img.shields.io/circleci/project/github/shellscape/koa-webpack.svg
+[tests-url]: https://circleci.com/gh/shellscape/koa-webpack
 
-[cover]: https://codecov.io/gh/shellscape/webpack-plugin-serve/branch/master/graph/badge.svg
-[cover-url]: https://codecov.io/gh/shellscape/webpack-plugin-serve
+[cover]: https://codecov.io/gh/shellscape/koa-webpack/branch/master/graph/badge.svg
+[cover-url]: https://codecov.io/gh/shellscape/koa-webpack
 
-[size]: https://packagephobia.now.sh/badge?p=webpack-plugin-serve
-[size-url]: https://packagephobia.now.sh/result?p=webpack-plugin-serve
+[size]: https://packagephobia.now.sh/badge?p=koa-webpack
+[size-url]: https://packagephobia.now.sh/result?p=koa-webpack
 
 # koa-webpack
 
