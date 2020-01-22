@@ -9,16 +9,10 @@ const request = require('supertest');
 const webpack = require('webpack');
 
 const koaWebpack = require('../lib');
+const config = require('./fixtures/webpack.config');
 
 const defaults = {
-  config: {
-    mode: 'development',
-    entry: [resolve(__dirname, 'fixtures', 'input.js')],
-    output: {
-      path: resolve(__dirname, 'fixtures'),
-      filename: 'output.js'
-    }
-  },
+  config,
   devMiddleware: {
     publicPath: '/',
     logLevel: 'silent'
@@ -32,7 +26,7 @@ function buildOptions(opts) {
   const options = merge({}, defaults, opts);
   return merge(options, {
     config: null,
-    compiler: webpack(options.config)
+    ...opts.configPath ? {} : { compiler: webpack(options.config) }
   });
 }
 
@@ -160,6 +154,18 @@ test('continues on if the file is not part of webpack', async (t) => {
   const response = await req.get('/some-other-file.js').expect(200);
 
   t.is(response.text, 'foo');
+
+  return close(server, middleware);
+});
+
+test('uses supplied Webpack configuration file', async (t) => {
+  const { middleware, req, server } = await setup({
+    configPath: resolve(__dirname, 'fixtures', 'webpack.config.js')
+  });
+
+  const response = await req.get('/output.js').expect(200);
+
+  t.regex(response.text, /Hello World/);
 
   return close(server, middleware);
 });
