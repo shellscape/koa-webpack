@@ -115,6 +115,26 @@ const middleware = await koaWebpack({ config });
 app.use(middleware);
 ```
 
+### configPath
+
+Type: `String`
+
+Allows you to specify the absolute path to the Webpack config file to be used.
+
+Example:
+
+```js
+const path = require('path');
+const koaWebpack = require('koa-webpack');
+
+// The Webpack config file would be at "./client/webpack.config.js".
+const middleware = await koaWebpack({
+  configPath: path.join(__dirname, 'client', 'webpack.config.js')
+});
+
+app.use(middleware);
+```
+
 ### devMiddleware
 
 Type: `Object`
