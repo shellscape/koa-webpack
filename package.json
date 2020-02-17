@@ -32,7 +32,7 @@
     "webpack": "^4.28.0"
   },
   "dependencies": {
-    "@hapi/joi": "^15.0.0",
+    "@hapi/joi": "^15.1.1",
     "app-root-path": "^2.0.1",
     "chalk": "^2.4.2",
     "loud-rejection": "^2.1.0",
