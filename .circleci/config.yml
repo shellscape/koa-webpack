@@ -31,19 +31,6 @@ jobs:
           name: Submit coverage data to codecov.
           command: bash <(curl -s https://codecov.io/bash)
           when: on_success
-  node-v8-latest:
-    docker:
-      - image: rollupcabal/circleci-node-v8:latest
-    steps:
-      - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-      - run:
-          name: NPM Rebuild
-          command: npm install
-      - run:
-          name: Run unit tests.
-          command: npm run ci:test
   analysis:
     docker:
       - image: rollupcabal/circleci-node-base:latest
@@ -75,12 +62,6 @@ workflows:
             tags:
               only: /.*/
       - node-v10-latest:
-          requires:
-            - analysis
-          filters:
-            tags:
-              only: /.*/
-      - node-v8-latest:
           requires:
             - analysis
           filters:
