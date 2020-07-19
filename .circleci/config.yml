@@ -26,6 +26,19 @@ jobs:
           command: npm install
       - run:
           name: Run unit tests.
+          command: npm run ci:test
+  node-v12-latest:
+    docker:
+      - image: rollupcabal/circleci-node-v12:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: NPM Rebuild
+          command: npm install
+      - run:
+          name: Run unit tests.
           command: npm run ci:coverage
       - run:
           name: Submit coverage data to codecov.
