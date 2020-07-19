@@ -30,9 +30,9 @@
     "webpack": "^4.28.0"
   },
   "dependencies": {
-    "@hapi/joi": "^17.1.1",
     "app-root-path": "^3.0.0",
     "chalk": "^4.1.0",
+    "joi": "^17.1.1",
     "loud-rejection": "^2.2.0",
     "merge-options": "^2.0.0",
     "webpack-dev-middleware": "^3.7.2",
