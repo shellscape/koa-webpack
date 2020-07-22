@@ -48,8 +48,8 @@
     "killable": "^1.0.0",
     "koa": "^2.2.0",
     "koa-compose": "^4.0.0",
-    "lint-staged": "^9.2.0",
-    "nyc": "^14.1.0",
+    "lint-staged": "^10.2.11",
+    "nyc": "^15.1.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.13.4",
     "supertest": "^4.0.2",
@@ -68,8 +68,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "husky": {
