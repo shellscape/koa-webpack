@@ -26,14 +26,10 @@ jobs:
           command: npm install
       - run:
           name: Run unit tests.
-          command: npm run ci:coverage
-      - run:
-          name: Submit coverage data to codecov.
-          command: bash <(curl -s https://codecov.io/bash)
-          when: on_success
-  node-v8-latest:
+          command: npm run ci:test
+  node-v12-latest:
     docker:
-      - image: rollupcabal/circleci-node-v8:latest
+      - image: rollupcabal/circleci-node-v12:latest
     steps:
       - checkout
       - restore_cache:
@@ -43,7 +39,11 @@ jobs:
           command: npm install
       - run:
           name: Run unit tests.
-          command: npm run ci:test
+          command: npm run ci:coverage
+      - run:
+          name: Submit coverage data to codecov.
+          command: bash <(curl -s https://codecov.io/bash)
+          when: on_success
   analysis:
     docker:
       - image: rollupcabal/circleci-node-base:latest
@@ -80,7 +80,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - node-v8-latest:
+      - node-v12-latest:
           requires:
             - analysis
           filters:

@@ -9,6 +9,7 @@ const request = require('supertest');
 const webpack = require('webpack');
 
 const koaWebpack = require('../lib');
+
 const config = require('./fixtures/webpack.config');
 
 const defaults = {
@@ -26,7 +27,7 @@ function buildOptions(opts) {
   const options = merge({}, defaults, opts);
   return merge(options, {
     config: null,
-    ...opts.configPath ? {} : { compiler: webpack(options.config) }
+    ...(opts.configPath ? {} : { compiler: webpack(options.config) })
   });
 }
 

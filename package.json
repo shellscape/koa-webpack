@@ -9,15 +9,13 @@
   "bugs": "https://github.com/shellscape/koa-webpack/issues",
   "main": "lib/index.js",
   "engines": {
-    "node": ">= 8.0.0 < 9.0.0 || >= 10.0.0"
+    "node": ">= 10.0.0"
   },
   "scripts": {
     "ci:coverage": "nyc npm run ci:test && nyc report --reporter=text-lcov > coverage.lcov",
     "ci:lint": "npm run lint && npm run security",
     "ci:lint:commits": "commitlint --from=${CIRCLE_BRANCH} --to=${CIRCLE_SHA1}",
     "ci:test": "npm run test -- --verbose",
-    "commitlint": "commitlint",
-    "commitmsg": "commitlint -e $GIT_PARAMS",
     "lint": "eslint --fix --cache lib test",
     "lint-staged": "lint-staged",
     "security": "npm audit",
@@ -32,36 +30,28 @@
     "webpack": "^4.28.0"
   },
   "dependencies": {
-    "@hapi/joi": "^15.0.0",
-    "app-root-path": "^2.0.1",
-    "chalk": "^2.4.2",
-    "loud-rejection": "^2.1.0",
-    "merge-options": "^1.0.0",
-    "webpack-dev-middleware": "^3.0.0",
-    "webpack-hot-client": "^4.1.0"
+    "app-root-path": "^3.0.0",
+    "chalk": "^4.1.0",
+    "joi": "^17.2.0",
+    "merge-options": "^2.0.0",
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-hot-client": "^4.1.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.1.0",
-    "@commitlint/config-conventional": "^8.1.0",
-    "ava": "^2.2.0",
-    "conventional-github-releaser": "^3.1.0",
-    "cross-env": "^5.1.6",
-    "deepmerge": "^4.0.0",
-    "del": "^5.0.0",
-    "del-cli": "^2.0.0",
+    "@commitlint/cli": "^9.1.2",
+    "ava": "^3.11.1",
     "eslint": "^6.0.1",
-    "eslint-config-shellscape": "^2.0.2",
-    "husky": "^3.0.0",
-    "killable": "^1.0.0",
-    "koa": "^2.2.0",
-    "koa-compose": "^4.0.0",
-    "lint-staged": "^9.2.0",
-    "memory-fs": "^0.4.1",
-    "nyc": "^14.1.0",
+    "eslint-config-shellscape": "^2.1.0",
+    "husky": "^4.2.5",
+    "killable": "^1.0.1",
+    "koa": "^2.13.0",
+    "koa-compose": "^4.1.0",
+    "lint-staged": "^10.2.11",
+    "nyc": "^15.1.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.13.4",
     "supertest": "^4.0.2",
-    "webpack": "^4.28.0"
+    "webpack": "^4.44.1"
   },
   "keywords": [
     "koa",
@@ -76,9 +66,13 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   },
   "pre-commit": "lint-staged"
 }
