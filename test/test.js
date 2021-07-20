@@ -15,8 +15,7 @@ const config = require('./fixtures/webpack.config');
 const defaults = {
   config,
   devMiddleware: {
-    publicPath: '/',
-    logLevel: 'silent'
+    publicPath: '/'
   },
   hotClient: {
     logLevel: 'silent'
@@ -56,7 +55,7 @@ function close(server, middleware) {
 
 test('should provide access to middleware and client', async (t) => {
   const { middleware, req, server } = await setup({
-    devMiddleware: { lazy: false }
+    devMiddleware: {}
   });
 
   await req.get('/output.js');
@@ -73,7 +72,7 @@ test('should provide access to middleware and client', async (t) => {
 
 test('should disable hot-client', async (t) => {
   const { middleware, req, server } = await setup({
-    devMiddleware: { lazy: false },
+    devMiddleware: {},
     hotClient: false
   });
 
@@ -87,7 +86,7 @@ test('should disable hot-client', async (t) => {
 
 test('sends the result in watch mode', async (t) => {
   const { middleware, req, server } = await setup({
-    devMiddleware: { lazy: false }
+    devMiddleware: {}
   });
 
   const response = await req.get('/output.js').expect(200);
@@ -99,7 +98,7 @@ test('sends the result in watch mode', async (t) => {
 
 test('sends the result to a MultiCompiler in watch mode', async (t) => {
   const { middleware, req, server } = await setup({
-    devMiddleware: { lazy: false },
+    devMiddleware: {},
     config: [
       {
         entry: [resolve(__dirname, 'fixtures', 'input.js')],
@@ -123,18 +122,6 @@ test('sends the result to a MultiCompiler in watch mode', async (t) => {
   t.regex(response.text, /Hello World/);
 
   response = await req.get('/output2.js').expect(200);
-
-  t.regex(response.text, /Hello World/);
-
-  return close(server, middleware);
-});
-
-test('builds and sends the result in lazy mode', async (t) => {
-  const { middleware, req, server } = await setup({
-    devMiddleware: { lazy: true }
-  });
-
-  const response = await req.get('/output.js').expect(200);
 
   t.regex(response.text, /Hello World/);
 
