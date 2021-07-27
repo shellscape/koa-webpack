@@ -18,7 +18,7 @@
     "ci:test": "npm run test -- --verbose",
     "lint": "eslint --fix --cache lib test",
     "lint-staged": "lint-staged",
-    "security": "npm audit",
+    "security": "npm audit --audit-level=high",
     "test": "ava --timeout=2500"
   },
   "files": [
