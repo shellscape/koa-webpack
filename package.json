@@ -34,7 +34,7 @@
     "chalk": "^4.1.0",
     "joi": "^17.2.0",
     "merge-options": "^2.0.0",
-    "webpack-dev-middleware": "^3.7.2",
+    "webpack-dev-middleware": "^5.3.4",
     "webpack-hot-client": "^4.1.2"
   },
   "devDependencies": {
